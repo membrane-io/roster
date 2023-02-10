@@ -11,7 +11,7 @@ export const Root = {
 export const RepositoryCollection = {
   one: async ({ args: { sha, url } }) => {
     if (!sha || !url) {
-      throw new Error("both params are required");
+      throw new Error("Both sha and url are required");
     }
     const [, user, repo] = url.match("https://github.com/([^/]+)/([^/]+)");
     const res = await nodes.github.users
