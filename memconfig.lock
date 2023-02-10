@@ -1,0 +1,3356 @@
+{
+  "types": {
+    "process": {
+      "gref_hash": "c7a6cc4739f2a6aa697342cf67d4924b8be757dbc2bd9eae395bc939f10d54ea",
+      "type": "sys-process:Root"
+    },
+    "directory": {
+      "gref_hash": "a15ba8f4b17255a57b21182e20ff7b3c0e01c14a6b55a9eecb95f82304bf1d74",
+      "type": "github:Repository"
+    },
+    "clock": {
+      "gref_hash": "da9d1c247b69702ed49d157f0d697d132f917d00f407438e43c7e438c837c024",
+      "type": "sys-clock:Root"
+    },
+    "github": {
+      "gref_hash": "e6e65bff3bc6bf18cb624db3dc3875132855784b407ad6877c3f2b19e56a428a",
+      "type": "github:Root"
+    },
+    "http": {
+      "gref_hash": "5cfa57fe83d1201eb831cc168a5dbe9decaa6010603df244ca6855f2fe61440c",
+      "type": "http:Root"
+    }
+  },
+  "imports": [
+    {
+      "name": "sys-process",
+      "schema": {
+        "types": [
+          {
+            "name": "Root",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "endpointUrl",
+                "description": "Gets the program's own endpoint URL",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          }
+        ],
+        "imports": []
+      },
+      "source": {
+        "Program": "tbd"
+      }
+    },
+    {
+      "name": "github",
+      "schema": {
+        "types": [
+          {
+            "name": "Root",
+            "description": "Driver for the Github API",
+            "actions": [
+              {
+                "name": "configure",
+                "description": "Invoke with a valid Github access token to configure this driver",
+                "type": "Void",
+                "params": [
+                  {
+                    "name": "token",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              }
+            ],
+            "fields": [
+              {
+                "name": "users",
+                "description": "",
+                "type": "UserCollection",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "status",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "parse",
+                "description": "",
+                "type": "List",
+                "ofType": {
+                  "type": "Ref",
+                  "ofType": "Repository"
+                },
+                "params": [
+                  {
+                    "name": "name",
+                    "type": "String"
+                  },
+                  {
+                    "name": "value",
+                    "type": "String"
+                  }
+                ],
+                "hints": {
+                  "hidden": false
+                }
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "Root",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "UserCollection",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "one",
+                "description": "",
+                "type": "User",
+                "params": [
+                  {
+                    "name": "name",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "page",
+                "description": "",
+                "type": "UserPage",
+                "params": [
+                  {
+                    "name": "since",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "UserCollection",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "UserPage",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "items",
+                "description": "",
+                "type": "List",
+                "ofType": "User",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "next",
+                "description": "",
+                "type": "Ref",
+                "ofType": "UserPage",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "UserPage",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "User",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "login",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {
+                  "primary": true
+                }
+              },
+              {
+                "name": "name",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {
+                  "secondary": true
+                }
+              },
+              {
+                "name": "bio",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "blog",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "company",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "repos",
+                "description": "",
+                "type": "RepositoryCollection",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "email",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "id",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "followers",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "following",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "location",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "type",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "avatar_url",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "created_at",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gravatar_id",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "public_gists",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "public_repos",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "site_admin",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "hireable",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "updated_at",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "User",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "RepositoryCollection",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "one",
+                "description": "",
+                "type": "Repository",
+                "params": [
+                  {
+                    "name": "name",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "page",
+                "description": "",
+                "type": "RepositoryPage",
+                "params": [
+                  {
+                    "name": "type",
+                    "type": "String"
+                  },
+                  {
+                    "name": "sort",
+                    "type": "String"
+                  },
+                  {
+                    "name": "direction",
+                    "type": "String"
+                  },
+                  {
+                    "name": "page",
+                    "type": "Int"
+                  },
+                  {
+                    "name": "pageSize",
+                    "type": "Int"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "search",
+                "description": "",
+                "type": "RepositoryPage",
+                "params": [
+                  {
+                    "name": "q",
+                    "type": "String"
+                  },
+                  {
+                    "name": "sort",
+                    "type": "String"
+                  },
+                  {
+                    "name": "order",
+                    "type": "String"
+                  },
+                  {
+                    "name": "page",
+                    "type": "Int"
+                  },
+                  {
+                    "name": "pageSize",
+                    "type": "Int"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "RepositoryCollection",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "RepositoryPage",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "items",
+                "description": "",
+                "type": "List",
+                "ofType": "Repository",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "next",
+                "description": "",
+                "type": "Ref",
+                "ofType": "RepositoryPage",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "RepositoryPage",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "Repository",
+            "description": "",
+            "actions": [
+              {
+                "name": "transfer",
+                "description": "",
+                "type": "Void",
+                "params": [
+                  {
+                    "name": "new_owner",
+                    "type": "String"
+                  },
+                  {
+                    "name": "new_name",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "addCollaborator",
+                "description": "",
+                "type": "Void",
+                "params": [
+                  {
+                    "name": "username",
+                    "type": "String"
+                  },
+                  {
+                    "name": "permission",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              }
+            ],
+            "fields": [
+              {
+                "name": "name",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {
+                  "primary": true
+                }
+              },
+              {
+                "name": "description",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {
+                  "secondary": true
+                }
+              },
+              {
+                "name": "content",
+                "description": "",
+                "type": "ContentCollection",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "archived",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "branches",
+                "description": "",
+                "type": "BranchCollection",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "fork",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "homepage",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "id",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "language",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "private",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "size",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "url",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "allow_merge_commit",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "allow_rebase_merge",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "allow_squash_merge",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "created_at",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "default_branch",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "forks_count",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "full_name",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "has_downloads",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "has_issues",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "has_pages",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "has_wiki",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "html_url",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "issues",
+                "description": "",
+                "type": "IssueCollection",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "network_count",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "open_issues_count",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "pushed_at",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "stargazers_count",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "subscribers_count",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "updated_at",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "watchers_count",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "pull_requests",
+                "description": "",
+                "type": "PullRequestCollection",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "releases",
+                "description": "",
+                "type": "ReleaseCollection",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "license",
+                "description": "",
+                "type": "License",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "commits",
+                "description": "",
+                "type": "CommitCollection",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "Repository",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": [
+              {
+                "name": "issueOpened",
+                "description": "",
+                "type": "Ref",
+                "ofType": "Issue",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "pullRequestOpened",
+                "description": "",
+                "type": "Ref",
+                "ofType": "PullRequest",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "releasePublished",
+                "description": "",
+                "type": "Ref",
+                "ofType": "Release",
+                "params": [],
+                "hints": {}
+              }
+            ]
+          },
+          {
+            "name": "BranchCollection",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "one",
+                "description": "",
+                "type": "Branch",
+                "params": [
+                  {
+                    "name": "name",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "page",
+                "description": "",
+                "type": "BranchPage",
+                "params": [
+                  {
+                    "name": "page",
+                    "type": "Int"
+                  },
+                  {
+                    "name": "pageSize",
+                    "type": "Int"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "BranchCollection",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "BranchPage",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "items",
+                "description": "",
+                "type": "List",
+                "ofType": "Branch",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "next",
+                "description": "",
+                "type": "Ref",
+                "ofType": "BranchPage",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "BranchPage",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "Branch",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "name",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "commit",
+                "description": "",
+                "type": "Commit",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "protected",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "Branch",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "CommitCollection",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "one",
+                "description": "",
+                "type": "Commit",
+                "params": [
+                  {
+                    "name": "ref",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "page",
+                "description": "",
+                "type": "CommitPage",
+                "params": [
+                  {
+                    "name": "page",
+                    "type": "Int"
+                  },
+                  {
+                    "name": "pageSize",
+                    "type": "Int"
+                  },
+                  {
+                    "name": "sha",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "CommitCollection",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "CommitPage",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "items",
+                "description": "",
+                "type": "List",
+                "ofType": "Commit",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "next",
+                "description": "",
+                "type": "Ref",
+                "ofType": "CommitPage",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "CommitPage",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "Commit",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "sha",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "message",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "author",
+                "description": "",
+                "type": "User",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "Commit",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "ContentCollection",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "file",
+                "description": "",
+                "type": "Content",
+                "params": [
+                  {
+                    "name": "path",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "dir",
+                "description": "",
+                "type": "List",
+                "ofType": "Content",
+                "params": [
+                  {
+                    "name": "path",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "ContentCollection",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "Content",
+            "description": "A file, directory, symlink or submodule",
+            "actions": [],
+            "fields": [
+              {
+                "name": "type",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {
+                  "primary": true
+                }
+              },
+              {
+                "name": "name",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {
+                  "primary": true
+                }
+              },
+              {
+                "name": "encoding",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "content",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "path",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "sha",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "size",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "submodule_git_url",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "html_url",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "download_url",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "Content",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "IssueCollection",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "one",
+                "description": "",
+                "type": "Issue",
+                "params": [
+                  {
+                    "name": "number",
+                    "type": "Int"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "search",
+                "description": "",
+                "type": "IssueSearchPage",
+                "params": [
+                  {
+                    "name": "page",
+                    "type": "Int"
+                  },
+                  {
+                    "name": "pageSize",
+                    "type": "Int"
+                  },
+                  {
+                    "name": "q",
+                    "type": "String"
+                  },
+                  {
+                    "name": "sort",
+                    "type": "String"
+                  },
+                  {
+                    "name": "order",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "page",
+                "description": "",
+                "type": "IssuePage",
+                "params": [
+                  {
+                    "name": "page",
+                    "type": "Int"
+                  },
+                  {
+                    "name": "pageSize",
+                    "type": "Int"
+                  },
+                  {
+                    "name": "kind",
+                    "type": "String"
+                  },
+                  {
+                    "name": "milestone",
+                    "type": "String"
+                  },
+                  {
+                    "name": "state",
+                    "type": "String"
+                  },
+                  {
+                    "name": "assignee",
+                    "type": "String"
+                  },
+                  {
+                    "name": "creator",
+                    "type": "String"
+                  },
+                  {
+                    "name": "mentioned",
+                    "type": "String"
+                  },
+                  {
+                    "name": "labels",
+                    "type": "String"
+                  },
+                  {
+                    "name": "sort",
+                    "type": "String"
+                  },
+                  {
+                    "name": "direction",
+                    "type": "String"
+                  },
+                  {
+                    "name": "since",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "IssueCollection",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "IssueSearchPage",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "total_count",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "incomplete_results",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "next",
+                "description": "",
+                "type": "Ref",
+                "ofType": "IssueSearchPage",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "items",
+                "description": "",
+                "type": "List",
+                "ofType": "Issue",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "IssueSearchPage",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "IssuePage",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "items",
+                "description": "",
+                "type": "List",
+                "ofType": "Issue",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "next",
+                "description": "",
+                "type": "Ref",
+                "ofType": "IssuePage",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "IssuePage",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "Issue",
+            "description": "",
+            "actions": [
+              {
+                "name": "subscribe",
+                "description": "",
+                "type": "Void",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "close",
+                "description": "",
+                "type": "Void",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "createComment",
+                "description": "",
+                "type": "Void",
+                "params": [
+                  {
+                    "name": "body",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              }
+            ],
+            "fields": [
+              {
+                "name": "active_lock_reason",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "assignee",
+                "description": "",
+                "type": "User",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "assignees",
+                "description": "",
+                "type": "List",
+                "ofType": "User",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "author_association",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "body",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "closed_at",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "closed_by",
+                "description": "",
+                "type": "User",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "comments",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "created_at",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "draft",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "id",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "labels",
+                "description": "",
+                "type": "List",
+                "ofType": "Label",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "locked",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "milestone",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "node_id",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "number",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {
+                  "primary": true
+                }
+              },
+              {
+                "name": "pull_request",
+                "description": "",
+                "type": "PullRequest",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "reactions",
+                "description": "",
+                "type": "Reactions",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "state",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "title",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {
+                  "secondary": true
+                }
+              },
+              {
+                "name": "updated_at",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "url",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "user",
+                "description": "",
+                "type": "User",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "Issue",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": [
+              {
+                "name": "closed",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              }
+            ]
+          },
+          {
+            "name": "Label",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "name",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {
+                  "primary": true
+                }
+              },
+              {
+                "name": "node_id",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "id",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "color",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "description",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "default",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "Label",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "Reactions",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "total_count",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "plus_1",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "minus_1",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "laugh",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "hooray",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "confused",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "heart",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "rocket",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "eyes",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "Reactions",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "PullRequest",
+            "description": "",
+            "actions": [
+              {
+                "name": "subscribe",
+                "description": "",
+                "type": "Void",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "close",
+                "description": "",
+                "type": "Void",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "createComment",
+                "description": "",
+                "type": "Void",
+                "params": [
+                  {
+                    "name": "body",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              }
+            ],
+            "fields": [
+              {
+                "name": "number",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {
+                  "primary": true
+                }
+              },
+              {
+                "name": "title",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {
+                  "primary": true
+                }
+              },
+              {
+                "name": "id",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "state",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "body",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "locked",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "merged",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "active_lock_reason",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "diff",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "node_id",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "owner",
+                "description": "",
+                "type": "Ref",
+                "ofType": "User",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "PullRequest",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": [
+              {
+                "name": "closed",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              }
+            ]
+          },
+          {
+            "name": "PullRequestCollection",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "one",
+                "description": "",
+                "type": "PullRequest",
+                "params": [
+                  {
+                    "name": "number",
+                    "type": "Int"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "page",
+                "description": "",
+                "type": "PullRequestPage",
+                "params": [
+                  {
+                    "name": "state",
+                    "type": "String"
+                  },
+                  {
+                    "name": "head",
+                    "type": "String"
+                  },
+                  {
+                    "name": "base",
+                    "type": "String"
+                  },
+                  {
+                    "name": "sort",
+                    "type": "String"
+                  },
+                  {
+                    "name": "direction",
+                    "type": "String"
+                  },
+                  {
+                    "name": "page",
+                    "type": "Int"
+                  },
+                  {
+                    "name": "pageSize",
+                    "type": "Int"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "PullRequestCollection",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "PullRequestPage",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "items",
+                "description": "",
+                "type": "List",
+                "ofType": "PullRequest",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "next",
+                "description": "",
+                "type": "Ref",
+                "ofType": "PullRequestPage",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "PullRequestPage",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "ReleaseCollection",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "one",
+                "description": "",
+                "type": "Release",
+                "params": [
+                  {
+                    "name": "id",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "page",
+                "description": "",
+                "type": "ReleasePage",
+                "params": [
+                  {
+                    "name": "pageSize",
+                    "type": "String"
+                  },
+                  {
+                    "name": "page",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "ReleaseCollection",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "ReleasePage",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "items",
+                "description": "",
+                "type": "List",
+                "ofType": "Release",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "next",
+                "description": "",
+                "type": "Ref",
+                "ofType": "ReleasePage",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "ReleasePage",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "Release",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "id",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "name",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "body",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "draft",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "prerelease",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "url",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "node_id",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "tag_name",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "target_commitish",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "created_at",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "Release",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "License",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "name",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "path",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "sha",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "size",
+                "description": "",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "url",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "type",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "content",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "encoding",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "license",
+                "description": "",
+                "type": "LicenseDesc",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "html_url",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "git_url",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "download_url",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "License",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "LicenseDesc",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "key",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "name",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "url",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "spdx_id",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "LicenseDesc",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          }
+        ],
+        "imports": [
+          {
+            "name": "sys-process",
+            "schema": {
+              "types": [
+                {
+                  "name": "Root",
+                  "description": "",
+                  "actions": [],
+                  "fields": [
+                    {
+                      "name": "endpointUrl",
+                      "description": "Gets the program's own endpoint URL",
+                      "type": "String",
+                      "params": [],
+                      "hints": {}
+                    }
+                  ],
+                  "events": []
+                }
+              ],
+              "imports": []
+            },
+            "source": {
+              "Program": "tbd"
+            }
+          },
+          {
+            "name": "http",
+            "schema": {
+              "types": [
+                {
+                  "name": "Root",
+                  "description": "Use this program to make HTTP requests",
+                  "actions": [
+                    {
+                      "name": "post",
+                      "description": "Performs a POST request",
+                      "type": "Resource",
+                      "params": [
+                        {
+                          "name": "url",
+                          "type": "String"
+                        },
+                        {
+                          "name": "headers",
+                          "type": "String"
+                        },
+                        {
+                          "name": "body",
+                          "type": "String"
+                        }
+                      ],
+                      "hints": {}
+                    },
+                    {
+                      "name": "put",
+                      "description": "Performs a PUT request",
+                      "type": "Resource",
+                      "params": [
+                        {
+                          "name": "url",
+                          "type": "String"
+                        },
+                        {
+                          "name": "headers",
+                          "type": "String"
+                        },
+                        {
+                          "name": "body",
+                          "type": "String"
+                        }
+                      ],
+                      "hints": {}
+                    },
+                    {
+                      "name": "patch",
+                      "description": "Performs a PATCH request",
+                      "type": "Resource",
+                      "params": [
+                        {
+                          "name": "url",
+                          "type": "String"
+                        },
+                        {
+                          "name": "headers",
+                          "type": "String"
+                        },
+                        {
+                          "name": "body",
+                          "type": "String"
+                        }
+                      ],
+                      "hints": {}
+                    },
+                    {
+                      "name": "delete",
+                      "description": "Performs a DELETE request",
+                      "type": "Resource",
+                      "params": [
+                        {
+                          "name": "url",
+                          "type": "String"
+                        },
+                        {
+                          "name": "headers",
+                          "type": "String"
+                        },
+                        {
+                          "name": "body",
+                          "type": "String"
+                        }
+                      ],
+                      "hints": {}
+                    }
+                  ],
+                  "fields": [
+                    {
+                      "name": "status",
+                      "description": "",
+                      "type": "String",
+                      "params": [],
+                      "hints": {}
+                    },
+                    {
+                      "name": "get",
+                      "description": "A resource obtained via a GET request",
+                      "type": "Resource",
+                      "params": [
+                        {
+                          "name": "url",
+                          "type": "String"
+                        },
+                        {
+                          "name": "headers",
+                          "type": "String"
+                        }
+                      ],
+                      "hints": {}
+                    },
+                    {
+                      "name": "gref",
+                      "description": "A reference to this node",
+                      "type": "Ref",
+                      "ofType": "Root",
+                      "params": [],
+                      "hints": {}
+                    }
+                  ],
+                  "events": []
+                },
+                {
+                  "name": "Resource",
+                  "description": "An HTTP response",
+                  "actions": [],
+                  "fields": [
+                    {
+                      "name": "status",
+                      "description": "HTTP status code",
+                      "type": "Int",
+                      "params": [],
+                      "hints": {}
+                    },
+                    {
+                      "name": "headers",
+                      "description": "HTTP headers returned by server",
+                      "type": "String",
+                      "params": [],
+                      "hints": {}
+                    },
+                    {
+                      "name": "body",
+                      "description": "Body of the request as a string",
+                      "type": "String",
+                      "params": [],
+                      "hints": {}
+                    },
+                    {
+                      "name": "gref",
+                      "description": "A reference to this node",
+                      "type": "Ref",
+                      "ofType": "Resource",
+                      "params": [],
+                      "hints": {}
+                    }
+                  ],
+                  "events": []
+                }
+              ],
+              "imports": [
+                {
+                  "name": "sys-process",
+                  "schema": {
+                    "types": [
+                      {
+                        "name": "Root",
+                        "description": "",
+                        "actions": [],
+                        "fields": [
+                          {
+                            "name": "endpointUrl",
+                            "description": "Gets the program's own endpoint URL",
+                            "type": "String",
+                            "params": [],
+                            "hints": {}
+                          }
+                        ],
+                        "events": []
+                      }
+                    ],
+                    "imports": []
+                  },
+                  "source": {
+                    "Program": "tbd"
+                  }
+                },
+                {
+                  "name": "sys-http",
+                  "schema": {
+                    "types": [
+                      {
+                        "name": "Root",
+                        "description": "",
+                        "actions": [
+                          {
+                            "name": "post",
+                            "description": "",
+                            "type": "Resource",
+                            "params": [
+                              {
+                                "name": "url",
+                                "type": "String"
+                              },
+                              {
+                                "name": "headers",
+                                "type": "String"
+                              },
+                              {
+                                "name": "body",
+                                "type": "String"
+                              }
+                            ],
+                            "hints": {}
+                          },
+                          {
+                            "name": "put",
+                            "description": "",
+                            "type": "Resource",
+                            "params": [
+                              {
+                                "name": "url",
+                                "type": "String"
+                              },
+                              {
+                                "name": "headers",
+                                "type": "String"
+                              },
+                              {
+                                "name": "body",
+                                "type": "String"
+                              }
+                            ],
+                            "hints": {}
+                          },
+                          {
+                            "name": "patch",
+                            "description": "",
+                            "type": "Resource",
+                            "params": [
+                              {
+                                "name": "url",
+                                "type": "String"
+                              },
+                              {
+                                "name": "headers",
+                                "type": "String"
+                              },
+                              {
+                                "name": "body",
+                                "type": "String"
+                              }
+                            ],
+                            "hints": {}
+                          },
+                          {
+                            "name": "delete",
+                            "description": "",
+                            "type": "Resource",
+                            "params": [
+                              {
+                                "name": "url",
+                                "type": "String"
+                              },
+                              {
+                                "name": "headers",
+                                "type": "String"
+                              },
+                              {
+                                "name": "body",
+                                "type": "String"
+                              }
+                            ],
+                            "hints": {}
+                          }
+                        ],
+                        "fields": [
+                          {
+                            "name": "get",
+                            "description": "",
+                            "type": "Resource",
+                            "params": [
+                              {
+                                "name": "url",
+                                "type": "String"
+                              },
+                              {
+                                "name": "headers",
+                                "type": "String"
+                              }
+                            ],
+                            "hints": {}
+                          }
+                        ],
+                        "events": []
+                      },
+                      {
+                        "name": "Resource",
+                        "description": "",
+                        "actions": [],
+                        "fields": [
+                          {
+                            "name": "status",
+                            "description": "",
+                            "type": "Int",
+                            "params": [],
+                            "hints": {}
+                          },
+                          {
+                            "name": "headers",
+                            "description": "",
+                            "type": "String",
+                            "params": [],
+                            "hints": {}
+                          },
+                          {
+                            "name": "body",
+                            "description": "",
+                            "type": "String",
+                            "params": [],
+                            "hints": {}
+                          }
+                        ],
+                        "events": []
+                      }
+                    ],
+                    "imports": []
+                  },
+                  "source": {
+                    "Program": "tbd"
+                  }
+                },
+                {
+                  "name": "sys-clock",
+                  "schema": {
+                    "types": [
+                      {
+                        "name": "Root",
+                        "description": "",
+                        "actions": [
+                          {
+                            "name": "sleep",
+                            "description": "",
+                            "type": "Void",
+                            "params": [
+                              {
+                                "name": "key",
+                                "type": "String"
+                              },
+                              {
+                                "name": "seconds",
+                                "type": "Float"
+                              }
+                            ],
+                            "hints": {}
+                          }
+                        ],
+                        "fields": [],
+                        "events": [
+                          {
+                            "name": "timer",
+                            "description": "",
+                            "type": "TimerEvent",
+                            "params": [
+                              {
+                                "name": "key",
+                                "type": "String"
+                              },
+                              {
+                                "name": "spec",
+                                "type": "String"
+                              },
+                              {
+                                "name": "maxCount",
+                                "type": "Int"
+                              }
+                            ],
+                            "hints": {}
+                          },
+                          {
+                            "name": "timerAt",
+                            "description": "",
+                            "type": "TimerEvent",
+                            "params": [
+                              {
+                                "name": "key",
+                                "type": "String"
+                              },
+                              {
+                                "name": "seconds",
+                                "type": "String"
+                              }
+                            ],
+                            "hints": {}
+                          }
+                        ]
+                      },
+                      {
+                        "name": "TimerEvent",
+                        "description": "",
+                        "actions": [],
+                        "fields": [
+                          {
+                            "name": "id",
+                            "description": "",
+                            "type": "String",
+                            "params": [],
+                            "hints": {}
+                          }
+                        ],
+                        "events": []
+                      }
+                    ],
+                    "imports": []
+                  },
+                  "source": {
+                    "Program": "tbd"
+                  }
+                },
+                {
+                  "name": "sys-process",
+                  "schema": {
+                    "types": [
+                      {
+                        "name": "Root",
+                        "description": "",
+                        "actions": [],
+                        "fields": [
+                          {
+                            "name": "endpointUrl",
+                            "description": "Gets the program's own endpoint URL",
+                            "type": "String",
+                            "params": [],
+                            "hints": {}
+                          }
+                        ],
+                        "events": []
+                      }
+                    ],
+                    "imports": []
+                  },
+                  "source": {
+                    "Program": "tbd"
+                  }
+                }
+              ]
+            },
+            "source": {
+              "Program": "tbd"
+            }
+          },
+          {
+            "name": "sys-clock",
+            "schema": {
+              "types": [
+                {
+                  "name": "Root",
+                  "description": "",
+                  "actions": [
+                    {
+                      "name": "sleep",
+                      "description": "",
+                      "type": "Void",
+                      "params": [
+                        {
+                          "name": "key",
+                          "type": "String"
+                        },
+                        {
+                          "name": "seconds",
+                          "type": "Float"
+                        }
+                      ],
+                      "hints": {}
+                    }
+                  ],
+                  "fields": [],
+                  "events": [
+                    {
+                      "name": "timer",
+                      "description": "",
+                      "type": "TimerEvent",
+                      "params": [
+                        {
+                          "name": "key",
+                          "type": "String"
+                        },
+                        {
+                          "name": "spec",
+                          "type": "String"
+                        },
+                        {
+                          "name": "maxCount",
+                          "type": "Int"
+                        }
+                      ],
+                      "hints": {}
+                    },
+                    {
+                      "name": "timerAt",
+                      "description": "",
+                      "type": "TimerEvent",
+                      "params": [
+                        {
+                          "name": "key",
+                          "type": "String"
+                        },
+                        {
+                          "name": "seconds",
+                          "type": "String"
+                        }
+                      ],
+                      "hints": {}
+                    }
+                  ]
+                },
+                {
+                  "name": "TimerEvent",
+                  "description": "",
+                  "actions": [],
+                  "fields": [
+                    {
+                      "name": "id",
+                      "description": "",
+                      "type": "String",
+                      "params": [],
+                      "hints": {}
+                    }
+                  ],
+                  "events": []
+                }
+              ],
+              "imports": []
+            },
+            "source": {
+              "Program": "tbd"
+            }
+          }
+        ]
+      },
+      "source": {
+        "Program": "tbd"
+      }
+    },
+    {
+      "name": "sys-clock",
+      "schema": {
+        "types": [
+          {
+            "name": "Root",
+            "description": "",
+            "actions": [
+              {
+                "name": "sleep",
+                "description": "",
+                "type": "Void",
+                "params": [
+                  {
+                    "name": "key",
+                    "type": "String"
+                  },
+                  {
+                    "name": "seconds",
+                    "type": "Float"
+                  }
+                ],
+                "hints": {}
+              }
+            ],
+            "fields": [],
+            "events": [
+              {
+                "name": "timer",
+                "description": "",
+                "type": "TimerEvent",
+                "params": [
+                  {
+                    "name": "key",
+                    "type": "String"
+                  },
+                  {
+                    "name": "spec",
+                    "type": "String"
+                  },
+                  {
+                    "name": "maxCount",
+                    "type": "Int"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "timerAt",
+                "description": "",
+                "type": "TimerEvent",
+                "params": [
+                  {
+                    "name": "key",
+                    "type": "String"
+                  },
+                  {
+                    "name": "seconds",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              }
+            ]
+          },
+          {
+            "name": "TimerEvent",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "id",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          }
+        ],
+        "imports": []
+      },
+      "source": {
+        "Program": "tbd"
+      }
+    },
+    {
+      "name": "http",
+      "schema": {
+        "types": [
+          {
+            "name": "Root",
+            "description": "Use this program to make HTTP requests",
+            "actions": [
+              {
+                "name": "post",
+                "description": "Performs a POST request",
+                "type": "Resource",
+                "params": [
+                  {
+                    "name": "url",
+                    "type": "String"
+                  },
+                  {
+                    "name": "headers",
+                    "type": "String"
+                  },
+                  {
+                    "name": "body",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "put",
+                "description": "Performs a PUT request",
+                "type": "Resource",
+                "params": [
+                  {
+                    "name": "url",
+                    "type": "String"
+                  },
+                  {
+                    "name": "headers",
+                    "type": "String"
+                  },
+                  {
+                    "name": "body",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "patch",
+                "description": "Performs a PATCH request",
+                "type": "Resource",
+                "params": [
+                  {
+                    "name": "url",
+                    "type": "String"
+                  },
+                  {
+                    "name": "headers",
+                    "type": "String"
+                  },
+                  {
+                    "name": "body",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "delete",
+                "description": "Performs a DELETE request",
+                "type": "Resource",
+                "params": [
+                  {
+                    "name": "url",
+                    "type": "String"
+                  },
+                  {
+                    "name": "headers",
+                    "type": "String"
+                  },
+                  {
+                    "name": "body",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              }
+            ],
+            "fields": [
+              {
+                "name": "status",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "get",
+                "description": "A resource obtained via a GET request",
+                "type": "Resource",
+                "params": [
+                  {
+                    "name": "url",
+                    "type": "String"
+                  },
+                  {
+                    "name": "headers",
+                    "type": "String"
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "Root",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "Resource",
+            "description": "An HTTP response",
+            "actions": [],
+            "fields": [
+              {
+                "name": "status",
+                "description": "HTTP status code",
+                "type": "Int",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "headers",
+                "description": "HTTP headers returned by server",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "body",
+                "description": "Body of the request as a string",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "Resource",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          }
+        ],
+        "imports": [
+          {
+            "name": "sys-process",
+            "schema": {
+              "types": [
+                {
+                  "name": "Root",
+                  "description": "",
+                  "actions": [],
+                  "fields": [
+                    {
+                      "name": "endpointUrl",
+                      "description": "Gets the program's own endpoint URL",
+                      "type": "String",
+                      "params": [],
+                      "hints": {}
+                    }
+                  ],
+                  "events": []
+                }
+              ],
+              "imports": []
+            },
+            "source": {
+              "Program": "tbd"
+            }
+          },
+          {
+            "name": "sys-http",
+            "schema": {
+              "types": [
+                {
+                  "name": "Root",
+                  "description": "",
+                  "actions": [
+                    {
+                      "name": "post",
+                      "description": "",
+                      "type": "Resource",
+                      "params": [
+                        {
+                          "name": "url",
+                          "type": "String"
+                        },
+                        {
+                          "name": "headers",
+                          "type": "String"
+                        },
+                        {
+                          "name": "body",
+                          "type": "String"
+                        }
+                      ],
+                      "hints": {}
+                    },
+                    {
+                      "name": "put",
+                      "description": "",
+                      "type": "Resource",
+                      "params": [
+                        {
+                          "name": "url",
+                          "type": "String"
+                        },
+                        {
+                          "name": "headers",
+                          "type": "String"
+                        },
+                        {
+                          "name": "body",
+                          "type": "String"
+                        }
+                      ],
+                      "hints": {}
+                    },
+                    {
+                      "name": "patch",
+                      "description": "",
+                      "type": "Resource",
+                      "params": [
+                        {
+                          "name": "url",
+                          "type": "String"
+                        },
+                        {
+                          "name": "headers",
+                          "type": "String"
+                        },
+                        {
+                          "name": "body",
+                          "type": "String"
+                        }
+                      ],
+                      "hints": {}
+                    },
+                    {
+                      "name": "delete",
+                      "description": "",
+                      "type": "Resource",
+                      "params": [
+                        {
+                          "name": "url",
+                          "type": "String"
+                        },
+                        {
+                          "name": "headers",
+                          "type": "String"
+                        },
+                        {
+                          "name": "body",
+                          "type": "String"
+                        }
+                      ],
+                      "hints": {}
+                    }
+                  ],
+                  "fields": [
+                    {
+                      "name": "get",
+                      "description": "",
+                      "type": "Resource",
+                      "params": [
+                        {
+                          "name": "url",
+                          "type": "String"
+                        },
+                        {
+                          "name": "headers",
+                          "type": "String"
+                        }
+                      ],
+                      "hints": {}
+                    }
+                  ],
+                  "events": []
+                },
+                {
+                  "name": "Resource",
+                  "description": "",
+                  "actions": [],
+                  "fields": [
+                    {
+                      "name": "status",
+                      "description": "",
+                      "type": "Int",
+                      "params": [],
+                      "hints": {}
+                    },
+                    {
+                      "name": "headers",
+                      "description": "",
+                      "type": "String",
+                      "params": [],
+                      "hints": {}
+                    },
+                    {
+                      "name": "body",
+                      "description": "",
+                      "type": "String",
+                      "params": [],
+                      "hints": {}
+                    }
+                  ],
+                  "events": []
+                }
+              ],
+              "imports": []
+            },
+            "source": {
+              "Program": "tbd"
+            }
+          },
+          {
+            "name": "sys-clock",
+            "schema": {
+              "types": [
+                {
+                  "name": "Root",
+                  "description": "",
+                  "actions": [
+                    {
+                      "name": "sleep",
+                      "description": "",
+                      "type": "Void",
+                      "params": [
+                        {
+                          "name": "key",
+                          "type": "String"
+                        },
+                        {
+                          "name": "seconds",
+                          "type": "Float"
+                        }
+                      ],
+                      "hints": {}
+                    }
+                  ],
+                  "fields": [],
+                  "events": [
+                    {
+                      "name": "timer",
+                      "description": "",
+                      "type": "TimerEvent",
+                      "params": [
+                        {
+                          "name": "key",
+                          "type": "String"
+                        },
+                        {
+                          "name": "spec",
+                          "type": "String"
+                        },
+                        {
+                          "name": "maxCount",
+                          "type": "Int"
+                        }
+                      ],
+                      "hints": {}
+                    },
+                    {
+                      "name": "timerAt",
+                      "description": "",
+                      "type": "TimerEvent",
+                      "params": [
+                        {
+                          "name": "key",
+                          "type": "String"
+                        },
+                        {
+                          "name": "seconds",
+                          "type": "String"
+                        }
+                      ],
+                      "hints": {}
+                    }
+                  ]
+                },
+                {
+                  "name": "TimerEvent",
+                  "description": "",
+                  "actions": [],
+                  "fields": [
+                    {
+                      "name": "id",
+                      "description": "",
+                      "type": "String",
+                      "params": [],
+                      "hints": {}
+                    }
+                  ],
+                  "events": []
+                }
+              ],
+              "imports": []
+            },
+            "source": {
+              "Program": "tbd"
+            }
+          },
+          {
+            "name": "sys-process",
+            "schema": {
+              "types": [
+                {
+                  "name": "Root",
+                  "description": "",
+                  "actions": [],
+                  "fields": [
+                    {
+                      "name": "endpointUrl",
+                      "description": "Gets the program's own endpoint URL",
+                      "type": "String",
+                      "params": [],
+                      "hints": {}
+                    }
+                  ],
+                  "events": []
+                }
+              ],
+              "imports": []
+            },
+            "source": {
+              "Program": "tbd"
+            }
+          }
+        ]
+      },
+      "source": {
+        "Program": "tbd"
+      }
+    }
+  ]
+}

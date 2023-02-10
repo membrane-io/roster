@@ -1,0 +1,108 @@
+{
+  "schema": {
+    "types": [
+      {
+        "name": "Root",
+        "actions": [
+          {
+            "name": "configure",
+            "type": "Void",
+            "params": [
+              {
+                "name": "TOKEN",
+                "type": "String"
+              }
+            ]
+          }
+        ],
+        "fields": [
+          {
+            "name": "repositories",
+            "type": "RepositoryCollection"
+          }
+        ]
+      },
+      {
+        "name": "RepositoryCollection",
+        "fields": [
+          {
+            "name": "one",
+            "type": "Repository",
+            "params": [
+              {
+                "name": "url",
+                "type": "String"
+              },
+              {
+                "name": "sha",
+                "type": "String"
+              }
+            ]
+          },
+          {
+            "name": "items",
+            "type": "List",
+            "ofType": {
+              "type": "Repository"
+            }
+          }
+        ],
+        "actions": [],
+        "events": []
+      },
+      {
+        "name": "Repository",
+        "fields": [
+          {
+            "name": "name",
+            "hints": {
+              "primary": true
+            },
+            "type": "String"
+          },
+          {
+            "name": "url",
+            "type": "String"
+          },
+          {
+            "name": "sha",
+            "type": "String",
+            "hints": {
+              "hidden": true
+            }
+          },
+          {
+            "name": "stars",
+            "type": "Int"
+          },
+          {
+            "name": "pullRequests",
+            "type": "Int"
+          },
+          {
+            "name": "pullRequestsUrls",
+            "type": "List",
+            "ofType": "String"
+          },
+          {
+            "name": "expressions",
+            "type": "Int"
+          },
+          {
+            "name": "types",
+            "type": "Int"
+          },
+          {
+            "name": "isOutdated",
+            "type": "Boolean"
+          }
+        ]
+      }
+    ]
+  },
+  "dependencies": {
+    "http": "http:",
+    "directory": "github:users.one(name:\"membrane-io\").repos.one(name:\"directory\")",
+    "github": "github:"
+  }
+}
