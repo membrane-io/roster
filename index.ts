@@ -20,8 +20,8 @@ export const RepositoryCollection = {
       .$query(
         `{
           stargazers_count
-          name
           url
+          name
           pull_requests {
             page {
               items {
@@ -56,8 +56,8 @@ export const RepositoryCollection = {
       .filter((item) => !item.download_url && item.size === 0)
       .map((item) => {
         // type-safe
-        const [url] = item.html_url?.match("https://github.com/([^/]+)/([^/]+)") || [];;
-        return { name: item.name, url, sha: item.sha };
+        const [url,,name] = item.html_url?.match("https://github.com/([^/]+)/([^/]+)") || [];;
+        return { name: name, url, sha: item.sha };
       });
   },
 };
