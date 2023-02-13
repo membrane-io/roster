@@ -17,24 +17,20 @@
         ],
         "fields": [
           {
-            "name": "repositories",
-            "type": "RepositoryCollection"
+            "name": "programs",
+            "type": "ProgramCollection"
           }
         ]
       },
       {
-        "name": "RepositoryCollection",
+        "name": "ProgramCollection",
         "fields": [
           {
             "name": "one",
-            "type": "Repository",
+            "type": "Program",
             "params": [
               {
-                "name": "url",
-                "type": "String"
-              },
-              {
-                "name": "sha",
+                "name": "name",
                 "type": "String"
               }
             ]
@@ -43,7 +39,7 @@
             "name": "items",
             "type": "List",
             "ofType": {
-              "type": "Repository"
+              "type": "Program"
             }
           }
         ],
@@ -51,7 +47,7 @@
         "events": []
       },
       {
-        "name": "Repository",
+        "name": "Program",
         "fields": [
           {
             "name": "name",

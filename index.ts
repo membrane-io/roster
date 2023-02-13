@@ -5,13 +5,24 @@ export const Root = {
   configure: async ({ args: { TOKEN } }) => {
     state.token = TOKEN;
   },
-  repositories: () => ({}),
+  programs: () => ({}),
 };
 
-export const RepositoryCollection = {
-  one: async ({ args: { sha, url } }) => {
-    if (!sha || !url) {
-      throw new Error("Both sha and url are required");
+export const ProgramCollection = {
+  one: async ({ args: { name } }) => {
+    if (!name) {
+      throw new Error("Program name is required");
+    }
+    let url: any;
+    try {
+      const res = await nodes.github.users
+        .one({ name: "membrane-io" })
+        .repos.one({ name: "directory" })
+        .content.file({ path: name })
+        .$query(`{ html_url type }`);
+      url = res.html_url;
+    } catch (error) {
+      throw new Error("Program not found");
     }
     const [, user, repo] = url.match("https://github.com/([^/]+)/([^/]+)");
     const res = await nodes.github.users
@@ -45,26 +56,26 @@ export const RepositoryCollection = {
           }
         }`
       );
-    return { ...res, sha };
+    return res;
   },
   items: async ({ self, args }) => {
-    const repositories = await nodes.github.users.one({ name: "membrane-io" })
+    const programs = await nodes.github.users
+      .one({ name: "membrane-io" })
       .repos.one({ name: "directory" })
       .content.dir.$query(`{ name sha html_url size download_url }`);
 
-    return repositories
+    return programs
       .filter((item) => !item.download_url && item.size === 0)
       .map((item) => {
         // type-safe
-        const [url,,name] = item.html_url?.match("https://github.com/([^/]+)/([^/]+)") || [];;
-        return { name: name, url, sha: item.sha };
+        return { name: item.name };
       });
   },
 };
 
-export const Repository = {
+export const Program = {
   gref: async ({ obj }) => {
-    return root.repositories.one({ url: obj.url, sha: obj.sha });
+    return root.programs.one({ name: obj.name });
   },
   stars: async ({ obj }) => {
     return obj.stargazers_count;
