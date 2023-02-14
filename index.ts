@@ -19,17 +19,13 @@ export const ProgramCollection = {
         .one({ name: "membrane-io" })
         .repos.one({ name: "directory" })
         .content.file({ path: name })
-        .$query(`{ html_url type }`);
+        .$query(`{ html_url }`);
       url = res.html_url;
     } catch (error) {
       throw new Error("Program not found");
     }
-    const [, user, repo] = url.match("https://github.com/([^/]+)/([^/]+)");
-    const res = await nodes.github.users
-      .one({ name: user })
-      .repos.one({ name: repo })
-      .$query(
-        `{
+    const res = repoFromUrl(url).$query(
+      `{
           stargazers_count
           url
           name
@@ -55,21 +51,20 @@ export const ProgramCollection = {
             }
           }
         }`
-      );
+    );
     return res;
   },
-  items: async ({ self, args }) => {
+  items: async ({ self, args, info }) => {
     const programs = await nodes.github.users
       .one({ name: "membrane-io" })
       .repos.one({ name: "directory" })
       .content.dir.$query(`{ name sha html_url size download_url }`);
 
-    return programs
-      .filter((item) => !item.download_url && item.size === 0)
-      .map((item) => {
-        // type-safe
-        return { name: item.name };
-      });
+    const isSubmodule = (item: any) => !item.download_url && item.size === 0;
+
+    return programs.filter(isSubmodule).map((item) => {
+      return { name: item.name, html_url: item.html_url };
+    });
   },
 };
 
@@ -88,13 +83,25 @@ export const Program = {
     const { schema } = JSON.parse(obj.content?.file?.content as string);
     return schema.types.length || 0;
   },
-  pullRequests: async ({ obj }) => {
-    return obj.pull_requests?.page?.items?.length || 0;
+  pullRequests: async ({ self, obj }) => {
+    let items = obj.pull_requests?.page?.items;
+    if (items === undefined && obj.html_url) {
+      const repo = repoFromUrl(obj.html_url);
+      items = await repo.pull_requests.page.items.$query(`{ number }`);
+    }
+    return items?.length;
   },
   pullRequestsUrls: async ({ obj }) => {
-    return obj.pull_requests?.page?.items?.map((item: any) => `${obj.url}/pull/${item.number}`);
+    return obj.pull_requests?.page?.items?.map(
+      (item: any) => `${obj.url}/pull/${item.number}`
+    );
   },
   isOutdated: async ({ obj }) => {
     return obj.commits?.page.items[0].sha !== obj.sha;
   },
 };
+
+function repoFromUrl(url: string): NodeGref<github.Repository> {
+  const [, user, repo] = url.match("https://github.com/([^/]+)/([^/]+)");
+  return nodes.github.users.one({ name: user }).repos.one({ name: repo });
+}
