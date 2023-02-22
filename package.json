@@ -1,0 +1,15 @@
+{
+  "name": "roster",
+  "version": "0.0.1",
+  "description": "Internal tool used by [Membrane](https://membrane.io) to manage the directory repository from within Membrane itself.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/membrane-io/roster.git"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
