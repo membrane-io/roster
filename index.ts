@@ -1,5 +1,8 @@
 import { nodes, root, state } from "membrane";
-import { parseGitmoduleFile } from "./utils";
+// import { parseGitmoduleFile } from "./utils";
+import { createElement } from "react";
+import { renderToString } from "react-dom/server";
+import { ProgramDetail, Programs } from "./ui.jsx";
 
 export const Root = {
   configure: async ({ args: { TOKEN } }) => {
@@ -14,20 +17,21 @@ export const ProgramCollection = {
       throw new Error("Program name is required");
     }
     let url: any;
+    let sha: any;
     try {
       const res = await nodes.github.users
         .one({ name: "membrane-io" })
         .repos.one({ name: "directory" })
         .content.file({ path: name })
-        .$query(`{ html_url }`);
+        .$query(`{ html_url, sha }`);
       url = res.html_url;
+      sha = res.sha;
     } catch (error) {
       throw new Error("Program not found");
     }
-    const res = repoFromUrl(url).$query(
+    const res = await repoFromUrl(url).$query(
       `{
           stargazers_count
-          url
           name
           pull_requests {
             page {
@@ -52,7 +56,7 @@ export const ProgramCollection = {
           }
         }`
     );
-    return res;
+    return { ...res, name, url, sha };
   },
   items: async ({ self, args, info }) => {
     const programs = await nodes.github.users
@@ -101,7 +105,49 @@ export const Program = {
   },
 };
 
+export async function endpoint({ args: { path, query, headers, method, body } }) {
+  switch (path) {
+    case "/": {
+      const directory = await root.programs.items.$query(`{ name, pullRequests }`);
+      const page = renderToString(createElement(Programs, { directory }));
+
+      return html(page);
+    }
+    case "/program": {
+      const { name } = parseQS(query);
+      const program = await root.programs.one({ name }).$query(`{ name, url, stars, expressions, types, pullRequests, pullRequestsUrls, isOutdated }`);
+      const page = renderToString(createElement(ProgramDetail, { program }));
+
+      return html(page);
+    }
+    default:
+      console.log("Unknown Endpoint:", path);
+  }
+}
+
 function repoFromUrl(url: string): NodeGref<github.Repository> {
   const [, user, repo] = url.match("https://github.com/([^/]+)/([^/]+)");
   return nodes.github.users.one({ name: user }).repos.one({ name: repo });
+}
+
+export const parseQS = (qs: string): Record<string, string> =>
+  Object.fromEntries(new URLSearchParams(qs).entries());
+
+function html(page: string) {
+  return `<!DOCTYPE html>
+    <head>
+      <meta charset="utf-8" />
+      <title>Membrane directory</title>
+      <link rel="stylesheet" href="https://www.membrane.io/light.css">
+    </head>
+    <body>
+      ${page}
+    </body>
+    <style>
+    body {
+      font-size: 10pt;
+    }
+    </style>
+    </html>
+  `;
 }
