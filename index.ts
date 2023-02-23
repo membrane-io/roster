@@ -1,13 +1,9 @@
 import { nodes, root, state } from "membrane";
-// import { parseGitmoduleFile } from "./utils";
 import { createElement } from "react";
 import { renderToString } from "react-dom/server";
 import { ProgramDetail, Programs } from "./ui.jsx";
 
 export const Root = {
-  configure: async ({ args: { TOKEN } }) => {
-    state.token = TOKEN;
-  },
   programs: () => ({}),
 };
 
@@ -109,16 +105,16 @@ export async function endpoint({ args: { path, query, headers, method, body } })
   switch (path) {
     case "/": {
       const directory = await root.programs.items.$query(`{ name, pullRequests }`);
-      const page = renderToString(createElement(Programs, { directory }));
+      const body = renderToString(createElement(Programs, { directory }));
 
-      return html(page);
+      return html(body);
     }
     case "/program": {
       const { name } = parseQS(query);
       const program = await root.programs.one({ name }).$query(`{ name, url, stars, expressions, types, pullRequests, pullRequestsUrls, isOutdated }`);
-      const page = renderToString(createElement(ProgramDetail, { program }));
+      const body = renderToString(createElement(ProgramDetail, { program }));
 
-      return html(page);
+      return html(body);
     }
     default:
       console.log("Unknown Endpoint:", path);
@@ -133,15 +129,15 @@ function repoFromUrl(url: string): NodeGref<github.Repository> {
 export const parseQS = (qs: string): Record<string, string> =>
   Object.fromEntries(new URLSearchParams(qs).entries());
 
-function html(page: string) {
+function html(body: string) {
   return `<!DOCTYPE html>
     <head>
       <meta charset="utf-8" />
-      <title>Membrane directory</title>
+      <title>Membrane roster</title>
       <link rel="stylesheet" href="https://www.membrane.io/light.css">
     </head>
     <body>
-      ${page}
+      ${body}
     </body>
     <style>
     body {

@@ -5,16 +5,6 @@
         "name": "Root",
         "actions": [
           {
-            "name": "configure",
-            "type": "Void",
-            "params": [
-              {
-                "name": "TOKEN",
-                "type": "String"
-              }
-            ]
-          },
-          {
             "name": "endpoint",
             "type": "String",
             "hints": {
