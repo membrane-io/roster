@@ -76,6 +76,14 @@
             "type": "String"
           },
           {
+            "name": "description",
+            "type": "String"
+          },
+          {
+            "name": "updated_at",
+            "type": "String"
+          },
+          {
             "name": "url",
             "type": "String"
           },
@@ -92,12 +100,8 @@
           },
           {
             "name": "pullRequests",
-            "type": "Int"
-          },
-          {
-            "name": "pullRequestsUrls",
             "type": "List",
-            "ofType": "String"
+            "ofType": "PullRequest"
           },
           {
             "name": "expressions",
@@ -110,6 +114,31 @@
           {
             "name": "isOutdated",
             "type": "Boolean"
+          },
+          {
+            "name": "lastCommit",
+            "type": "String"
+          }
+        ]
+      },
+      {
+        "name": "PullRequest",
+        "fields": [
+          {
+            "name": "number",
+            "type": "Int"
+          },
+          {
+            "name": "state",
+            "type": "String"
+          },
+          {
+            "name": "title",
+            "type": "String"
+          },
+          {
+            "name": "body",
+            "type": "String"
           }
         ]
       }
