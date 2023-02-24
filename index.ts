@@ -1,13 +1,9 @@
 import { nodes, root, state } from "membrane";
-// import { parseGitmoduleFile } from "./utils";
 import { createElement } from "react";
 import { renderToString } from "react-dom/server";
 import { ProgramDetail, Programs } from "./ui.jsx";
 
 export const Root = {
-  configure: async ({ args: { TOKEN } }) => {
-    state.token = TOKEN;
-  },
   programs: () => ({}),
 };
 
@@ -33,12 +29,15 @@ export const ProgramCollection = {
       `{
           stargazers_count
           name
+          description
+          updated_at
           pull_requests {
-            page {
+            page(state: "all") {
               items {
                 number
                 state
                 title
+                body
               }
             }
           }
@@ -91,14 +90,12 @@ export const Program = {
     let items = obj.pull_requests?.page?.items;
     if (items === undefined && obj.html_url) {
       const repo = repoFromUrl(obj.html_url);
-      items = await repo.pull_requests.page.items.$query(`{ number }`);
+      items = await repo.pull_requests.page.items.$query(`{ number title state body }`);
     }
-    return items?.length;
+    return items;
   },
-  pullRequestsUrls: async ({ obj }) => {
-    return obj.pull_requests?.page?.items?.map(
-      (item: any) => `${obj.url}/pull/${item.number}`
-    );
+  lastCommit: async ({ obj }) => {
+    return obj.commits?.page.items[0].sha;
   },
   isOutdated: async ({ obj }) => {
     return obj.commits?.page.items[0].sha !== obj.sha;
@@ -108,17 +105,30 @@ export const Program = {
 export async function endpoint({ args: { path, query, headers, method, body } }) {
   switch (path) {
     case "/": {
-      const directory = await root.programs.items.$query(`{ name, pullRequests }`);
-      const page = renderToString(createElement(Programs, { directory }));
+      let { cache } = parseQS(query);
+      let programs = state.programs;
+      let currentTime = new Date().getTime();
+      if (!programs || cache === "false") {
+        programs = await root.programs.items.$query(`{ name, pullRequests { number } }`);
+        state.programs = programs;
+        state.lastRefreshTime = currentTime;
+      }
 
-      return html(page);
+      const timeElapsed = Math.floor((Date.now() - state.lastRefreshTime) / 1000 / 60);
+      const refreshedAt = `Refreshed ${timeElapsed} minute${timeElapsed === 1 ? "" : "s"} ago`;
+
+      const body = renderToString(createElement(Programs, { programs, refreshedAt }));
+      return html(body);
     }
     case "/program": {
       const { name } = parseQS(query);
-      const program = await root.programs.one({ name }).$query(`{ name, url, stars, expressions, types, pullRequests, pullRequestsUrls, isOutdated }`);
-      const page = renderToString(createElement(ProgramDetail, { program }));
-
-      return html(page);
+      const program = await root.programs
+        .one({ name })
+        .$query(
+          `{ name, description, url, stars, lastCommit, expressions, types, updated_at, pullRequests { number title state body }, isOutdated }`
+        );
+      const body = renderToString(createElement(ProgramDetail, { program }));
+      return html(body);
     }
     default:
       console.log("Unknown Endpoint:", path);
@@ -133,19 +143,39 @@ function repoFromUrl(url: string): NodeGref<github.Repository> {
 export const parseQS = (qs: string): Record<string, string> =>
   Object.fromEntries(new URLSearchParams(qs).entries());
 
-function html(page: string) {
+function html(body: string) {
   return `<!DOCTYPE html>
     <head>
       <meta charset="utf-8" />
-      <title>Membrane directory</title>
+      <title>Membrane roster</title>
       <link rel="stylesheet" href="https://www.membrane.io/light.css">
     </head>
     <body>
-      ${page}
+      ${body}
     </body>
     <style>
     body {
       font-size: 10pt;
+    }
+    table, th, td {
+      border: 1px solid #e7e7e7;
+      border-collapse: collapse;
+      border-style: dotted;
+      padding: 5px;
+    }
+    .header{
+      padding-bottom: 10px;
+    }
+    .link:link { text-decoration: none; }
+    .link:visited { text-decoration: none; }
+    .link:hover { text-decoration: underline; }
+    .link:active { text-decoration: underline; }
+    .container {
+      inset: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
     }
     </style>
     </html>
