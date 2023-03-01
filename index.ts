@@ -1,10 +1,45 @@
 import { nodes, root, state } from "membrane";
 import { createElement } from "react";
 import { renderToString } from "react-dom/server";
-import { ProgramDetail, Programs } from "./ui.jsx";
+import { ProgramDetail, Programs, RepinMessage } from "./ui.jsx";
 
 export const Root = {
   programs: () => ({}),
+  syncProgram: async ({ args: { user, repo, name } }) => {
+    // get the parent repo sha
+    const parent: string = await nodes.directory.branches.one({ name: "main" }).commit.sha.$get();
+    // get the submodule sha
+    const children: string = await nodes.github.users
+      .one({ name: user })
+      .repos.one({ name: repo })
+      .branches.one({ name: "main" })
+      .commit.sha.$get();
+
+    // create tree and return sha
+    const tree: any = await nodes.directory
+      .createTree({
+        base: parent,
+        tree: children,
+        path: name,
+      })
+      .$invoke();
+
+    // commit the tree and return sha
+    const commit: any = await nodes.directory.commits
+      .create({
+        message: `Sync ${name}`,
+        tree,
+        parents: parent,
+      })
+      .$invoke();
+
+    // repin driver - update master to point to your commit
+    await nodes.directory.branches
+      .one({ name: "main" })
+      .update({ sha: commit, ref: "heads/main" })
+      .$invoke();
+    return `The program ${name} was updated`;
+  },
 };
 
 export const ProgramCollection = {
@@ -118,6 +153,16 @@ export async function endpoint({ args: { path, query, headers, method, body } })
       const refreshedAt = `Refreshed ${timeElapsed} minute${timeElapsed === 1 ? "" : "s"} ago`;
 
       const body = renderToString(createElement(Programs, { programs, refreshedAt }));
+      return html(body);
+    }
+    case "/update-program": {
+      const { name, repo, user } = parseQS(query);
+      if (!name || !repo || !user) {
+        return "Unknown Program";
+      }
+
+      const message = await root.syncProgram({ name, repo, user }).$invoke();
+      const body = renderToString(createElement(RepinMessage, { message }));
       return html(body);
     }
     case "/program": {
