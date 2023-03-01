@@ -32,6 +32,24 @@
                 "type": "String"
               }
             ]
+          },
+          {
+            "name": "syncProgram",
+            "type": "String",
+            "params": [
+              {
+                "name": "user",
+                "type": "String"
+              },
+              {
+                "name": "repo",
+                "type": "String"
+              },
+              {
+                "name": "name",
+                "type": "String"
+              }
+            ]
           }
         ],
         "fields": [

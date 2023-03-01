@@ -37,6 +37,42 @@ function RefreshButton({ refreshedAt }) {
   );
 }
 
+export function RepinMessage({ message }) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-around",
+          alignItems: "center",
+        }}
+      >
+        <section>
+          <div className="header">
+            <a
+              className="link button"
+              style={{ padding: "2px 4px" }}
+              href="javascript:history.back()"
+            >
+              <span>&#8592;&#32;</span>Back
+            </a>
+          </div>
+          <div>
+            <span>{message}</span>
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+}
+
 export function ProgramTable({ programs }: { programs: Program[] }) {
   return (
     <div>
@@ -157,6 +193,7 @@ function ProgramInfo({ program }: ProgramDetailProps) {
 }
 
 export function ProgramDetail({ program }: ProgramDetailProps) {
+  const [, user, repo] = program.url.match("https://github.com/([^/]+)/([^/]+)");
   return (
     <div className="container">
       <div
@@ -177,15 +214,40 @@ export function ProgramDetail({ program }: ProgramDetailProps) {
         >
           <section style={{ alignSelf: "center", minWidth: "800px" }}>
             <h2>{program.name}</h2>
-            <div className="header">
-              <a className="link button" style={{ padding: "2px 4px" }} href="/">
-                <span>&#8592;&#32;</span>Back
-              </a>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              <div>
+                <a className="link button" style={{ padding: "2px 4px" }} href="/">
+                  <span>&#8592;&#32;</span>Back
+                </a>
+              </div>
+              {program.isOutdated && (
+                <div>
+                  <a
+                    className="link button"
+                    style={{ marginLeft: "5px", padding: "2px 4px" }}
+                    href={`/update-program?name=${program.name}&repo=${repo}&user=${user}`}
+                  >
+                    <span>&#8593;&#32;</span>Update program
+                  </a>
+                </div>
+              )}
             </div>
             <ProgramInfo program={program} />
           </section>
           {program.pullRequests.map((item) => (
-            <PullRequest key={item.number} url={`${fixUrl(program.url)}/pull/`} pullRequest={item} />
+            <PullRequest
+              key={item.number}
+              url={`${fixUrl(program.url)}/pull/`}
+              pullRequest={item}
+            />
           ))}
         </div>
       </div>
