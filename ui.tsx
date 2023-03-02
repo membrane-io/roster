@@ -37,7 +37,7 @@ function RefreshButton({ refreshedAt }) {
   );
 }
 
-export function RepinMessage({ message }) {
+export function RepinMessage({ name }) {
   return (
     <div
       style={{
@@ -59,13 +59,13 @@ export function RepinMessage({ message }) {
             <a
               className="link button"
               style={{ padding: "2px 4px" }}
-              href="javascript:history.back()"
+              href={`/program?name=${name}`}
             >
               <span>&#8592;&#32;</span>Back
             </a>
           </div>
           <div>
-            <span>{message}</span>
+            <span>The program {name} was updated</span>
           </div>
         </section>
       </div>
@@ -193,7 +193,6 @@ function ProgramInfo({ program }: ProgramDetailProps) {
 }
 
 export function ProgramDetail({ program }: ProgramDetailProps) {
-  const [, user, repo] = program.url.match("https://github.com/([^/]+)/([^/]+)");
   return (
     <div className="container">
       <div
@@ -233,7 +232,7 @@ export function ProgramDetail({ program }: ProgramDetailProps) {
                   <a
                     className="link button"
                     style={{ marginLeft: "5px", padding: "2px 4px" }}
-                    href={`/update-program?name=${program.name}&repo=${repo}&user=${user}`}
+                    href={`/update-program?name=${program.name}`}
                   >
                     <span>&#8593;&#32;</span>Update program
                   </a>
