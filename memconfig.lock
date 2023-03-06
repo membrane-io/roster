@@ -1,12 +1,12 @@
 {
   "types": {
-    "http": {
-      "gref_hash": "5cfa57fe83d1201eb831cc168a5dbe9decaa6010603df244ca6855f2fe61440c",
-      "type": "http:Root"
-    },
     "directory": {
       "gref_hash": "a15ba8f4b17255a57b21182e20ff7b3c0e01c14a6b55a9eecb95f82304bf1d74",
       "type": "github:Repository"
+    },
+    "http": {
+      "gref_hash": "5cfa57fe83d1201eb831cc168a5dbe9decaa6010603df244ca6855f2fe61440c",
+      "type": "http:Root"
     },
     "github": {
       "gref_hash": "e6e65bff3bc6bf18cb624db3dc3875132855784b407ad6877c3f2b19e56a428a",

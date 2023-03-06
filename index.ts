@@ -5,41 +5,6 @@ import { ProgramDetail, Programs, RepinMessage } from "./ui.jsx";
 
 export const Root = {
   programs: () => ({}),
-  syncProgram: async ({ args: { user, repo, name } }) => {
-    // get the parent repo sha
-    const parent: string = await nodes.directory.branches.one({ name: "main" }).commit.sha.$get();
-    // get the submodule sha
-    const children: string = await nodes.github.users
-      .one({ name: user })
-      .repos.one({ name: repo })
-      .branches.one({ name: "main" })
-      .commit.sha.$get();
-
-    // create tree and return sha
-    const tree: any = await nodes.directory
-      .createTree({
-        base: parent,
-        tree: children,
-        path: name,
-      })
-      .$invoke();
-
-    // commit the tree and return sha
-    const commit: any = await nodes.directory.commits
-      .create({
-        message: `Sync ${name}`,
-        tree,
-        parents: parent,
-      })
-      .$invoke();
-
-    // repin driver - update master to point to your commit
-    await nodes.directory.branches
-      .one({ name: "main" })
-      .update({ sha: commit, ref: "heads/main" })
-      .$invoke();
-    return `The program ${name} was updated`;
-  },
 };
 
 export const ProgramCollection = {
@@ -135,6 +100,35 @@ export const Program = {
   isOutdated: async ({ obj }) => {
     return obj.commits?.page.items[0].sha !== obj.sha;
   },
+  update: async ({ obj }) => {
+    const { name, url } = obj;
+    const [, user, repo] = url.match("https://github.com/([^/]+)/([^/]+)");
+    // get the parent repo sha
+    const parent: any = await nodes.directory.branches.one({ name: "main" }).commit.sha;
+    // get the submodule sha
+    const children: any = await nodes.github.users
+      .one({ name: user })
+      .repos.one({ name: repo })
+      .branches.one({ name: "main" })
+      .commit.sha;
+
+    // create tree and return sha
+    const tree: any = await nodes.directory.createTree({
+      base: parent,
+      tree: children,
+      path: name,
+    });
+
+    // commit the tree and return sha
+    const commit: any = await nodes.directory.commits.create({
+      message: `Sync ${name}`,
+      tree,
+      parents: parent,
+    });
+
+    // repin driver - update master to point to your commit
+    await nodes.directory.branches.one({ name: "main" }).update({ sha: commit, ref: "heads/main" });
+  },
 };
 
 export async function endpoint({ args: { path, query, headers, method, body } }) {
@@ -156,13 +150,13 @@ export async function endpoint({ args: { path, query, headers, method, body } })
       return html(body);
     }
     case "/update-program": {
-      const { name, repo, user } = parseQS(query);
-      if (!name || !repo || !user) {
+      const { name } = parseQS(query);
+      if (!name) {
         return "Unknown Program";
       }
 
-      const message = await root.syncProgram({ name, repo, user }).$invoke();
-      const body = renderToString(createElement(RepinMessage, { message }));
+      await root.programs.one({ name }).update();
+      const body = renderToString(createElement(RepinMessage, { name }));
       return html(body);
     }
     case "/program": {
