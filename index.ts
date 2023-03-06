@@ -155,7 +155,7 @@ export async function endpoint({ args: { path, query, headers, method, body } })
         return "Unknown Program";
       }
 
-      await root.programs.one({ name }).update();
+      root.programs.one({ name }).update();
       const body = renderToString(createElement(RepinMessage, { name }));
       return html(body);
     }
