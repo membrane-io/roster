@@ -4,7 +4,7 @@ import { renderToString } from "react-dom/server";
 import { ProgramDetail, Programs, RepinMessage } from "./ui.jsx";
 
 export const Root = {
-  programs: () => ({})
+  programs: () => ({}),
 };
 
 export const ProgramCollection = {
@@ -104,37 +104,30 @@ export const Program = {
     const { name, url } = obj;
     const [, user, repo] = url.match("https://github.com/([^/]+)/([^/]+)");
     // get the parent repo sha
-    const parent: string = await nodes.directory.branches.one({ name: "main" }).commit.sha.$get();
+    const parent: any = await nodes.directory.branches.one({ name: "main" }).commit.sha;
     // get the submodule sha
-    const children: string = await nodes.github.users
+    const children: any = await nodes.github.users
       .one({ name: user })
       .repos.one({ name: repo })
       .branches.one({ name: "main" })
-      .commit.sha.$get();
+      .commit.sha;
 
     // create tree and return sha
-    const tree: any = await nodes.directory
-      .createTree({
-        base: parent,
-        tree: children,
-        path: name,
-      })
-      .$invoke();
+    const tree: any = await nodes.directory.createTree({
+      base: parent,
+      tree: children,
+      path: name,
+    });
 
     // commit the tree and return sha
-    const commit: any = await nodes.directory.commits
-      .create({
-        message: `Sync ${name}`,
-        tree,
-        parents: parent,
-      })
-      .$invoke();
+    const commit: any = await nodes.directory.commits.create({
+      message: `Sync ${name}`,
+      tree,
+      parents: parent,
+    });
 
     // repin driver - update master to point to your commit
-    await nodes.directory.branches
-      .one({ name: "main" })
-      .update({ sha: commit, ref: "heads/main" })
-      .$invoke();
+    await nodes.directory.branches.one({ name: "main" }).update({ sha: commit, ref: "heads/main" });
   },
 };
 
@@ -162,7 +155,7 @@ export async function endpoint({ args: { path, query, headers, method, body } })
         return "Unknown Program";
       }
 
-      await root.programs.one({ name }).update.$get();
+      await root.programs.one({ name }).update();
       const body = renderToString(createElement(RepinMessage, { name }));
       return html(body);
     }
