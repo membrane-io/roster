@@ -179,8 +179,8 @@ function repoFromUrl(url: string): NodeGref<github.Repository> {
   return nodes.github.users.one({ name: user }).repos.one({ name: repo });
 }
 
-export const parseQS = (qs: string): Record<string, string> =>
-  Object.fromEntries(new URLSearchParams(qs).entries());
+const parseQS = (qs: string): Record<string, string> =>
+  Object.fromEntries((new URLSearchParams(qs) as any).entries());
 
 function html(body: string) {
   return `<!DOCTYPE html>
