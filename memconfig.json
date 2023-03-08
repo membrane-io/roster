@@ -36,6 +36,10 @@
         ],
         "fields": [
           {
+            "name": "status",
+            "type": "String"
+          },
+          {
             "name": "programs",
             "type": "ProgramCollection"
           }
