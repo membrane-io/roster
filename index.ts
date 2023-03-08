@@ -212,12 +212,11 @@ function html(body: string) {
     </body>
     <style>
     body {
-      font-size: 10pt;
+      font-size: 12px;
     }
     table, th, td {
-      border: 1px solid #e7e7e7;
+      border: none;
       border-collapse: collapse;
-      border-style: dotted;
       padding: 5px;
     }
     .header{
