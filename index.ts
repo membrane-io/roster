@@ -4,6 +4,10 @@ import { renderToString } from "react-dom/server";
 import { ProgramDetail, Programs, RepinMessage } from "./ui.jsx";
 
 export const Root = {
+  status: async () => {
+    const url = (state.url = state.url || (await nodes.process.endpointUrl));
+    return `[Open](${url})`;
+  },
   programs: () => ({}),
 };
 
@@ -32,7 +36,7 @@ export const ProgramCollection = {
           description
           updated_at
           pull_requests {
-            page(state: "all") {
+            page(state: "open") {
               items {
                 number
                 state
@@ -90,7 +94,9 @@ export const Program = {
     let items = obj.pull_requests?.page?.items;
     if (items === undefined && obj.html_url) {
       const repo = repoFromUrl(obj.html_url);
-      items = await repo.pull_requests.page.items.$query(`{ number title state body }`);
+      items = await repo.pull_requests.page.items.$query(
+        `{ number title state body }`
+      );
     }
     return items;
   },
@@ -104,13 +110,13 @@ export const Program = {
     const { name, url } = obj;
     const [, user, repo] = url.match("https://github.com/([^/]+)/([^/]+)");
     // get the parent repo sha
-    const parent: any = await nodes.directory.branches.one({ name: "main" }).commit.sha;
+    const parent: any = await nodes.directory.branches.one({ name: "main" })
+      .commit.sha;
     // get the submodule sha
     const children: any = await nodes.github.users
       .one({ name: user })
       .repos.one({ name: repo })
-      .branches.one({ name: "main" })
-      .commit.sha;
+      .branches.one({ name: "main" }).commit.sha;
 
     // create tree and return sha
     const tree: any = await nodes.directory.createTree({
@@ -127,26 +133,38 @@ export const Program = {
     });
 
     // repin driver - update master to point to your commit
-    await nodes.directory.branches.one({ name: "main" }).update({ sha: commit, ref: "heads/main" });
+    await nodes.directory.branches
+      .one({ name: "main" })
+      .update({ sha: commit, ref: "heads/main" });
   },
 };
 
-export async function endpoint({ args: { path, query, headers, method, body } }) {
+export async function endpoint({
+  args: { path, query, headers, method, body },
+}) {
   switch (path) {
     case "/": {
       let { cache } = parseQS(query);
       let programs = state.programs;
       let currentTime = new Date().getTime();
       if (!programs || cache === "false") {
-        programs = await root.programs.items.$query(`{ name, pullRequests { number } }`);
+        programs = await root.programs.items.$query(
+          `{ name, pullRequests { number } }`
+        );
         state.programs = programs;
         state.lastRefreshTime = currentTime;
       }
 
-      const timeElapsed = Math.floor((Date.now() - state.lastRefreshTime) / 1000 / 60);
-      const refreshedAt = `Refreshed ${timeElapsed} minute${timeElapsed === 1 ? "" : "s"} ago`;
+      const timeElapsed = Math.floor(
+        (Date.now() - state.lastRefreshTime) / 1000 / 60
+      );
+      const refreshedAt = `Refreshed ${timeElapsed} minute${
+        timeElapsed === 1 ? "" : "s"
+      } ago`;
 
-      const body = renderToString(createElement(Programs, { programs, refreshedAt }));
+      const body = renderToString(
+        createElement(Programs, { programs, refreshedAt })
+      );
       return html(body);
     }
     case "/update-program": {
@@ -194,12 +212,11 @@ function html(body: string) {
     </body>
     <style>
     body {
-      font-size: 10pt;
+      font-size: 12px;
     }
     table, th, td {
-      border: 1px solid #e7e7e7;
+      border: none;
       border-collapse: collapse;
-      border-style: dotted;
       padding: 5px;
     }
     .header{
