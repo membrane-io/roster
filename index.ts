@@ -155,7 +155,7 @@ export async function endpoint({ args: { path, query, headers, method, body } })
         return "Unknown Program";
       }
 
-      root.programs.one({ name }).update();
+      await root.programs.one({ name }).update();
       const body = renderToString(createElement(RepinMessage, { name }));
       return html(body);
     }
@@ -174,8 +174,8 @@ export async function endpoint({ args: { path, query, headers, method, body } })
   }
 }
 
-function repoFromUrl(url: string): NodeGref<github.Repository> {
-  const [, user, repo] = url.match("https://github.com/([^/]+)/([^/]+)");
+function repoFromUrl(url: string): github.Repository {
+  const [, user, repo] = url.match("https://github.com/([^/]+)/([^/]+)")!;
   return nodes.github.users.one({ name: user }).repos.one({ name: repo });
 }
 
