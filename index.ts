@@ -3,10 +3,16 @@ import { createElement } from "react";
 import { renderToString } from "react-dom/server";
 import { ProgramDetail, Programs, RepinMessage } from "./ui.jsx";
 
+const directory = nodes.github.users
+  .one({ name: "membrane-io" })
+  .repos.one({ name: "directory" });
+
+state.programUrls = state.programUrls || {};
+
 export const Root = {
   status: async () => {
     const url = (state.url = state.url || (await nodes.process.endpointUrl));
-    return `[Open](${url})`;
+    return `Ready [Open](${url})`;
   },
   programs: () => ({}),
 };
@@ -19,15 +25,13 @@ export const ProgramCollection = {
     let url: any;
     let sha: any;
     try {
-      const res = await nodes.github.users
-        .one({ name: "membrane-io" })
-        .repos.one({ name: "directory" })
-        .content.file({ path: name })
+      const res = await directory.content
+        .file({ path: name })
         .$query(`{ html_url, sha }`);
       url = res.html_url;
       sha = res.sha;
     } catch (error) {
-      throw new Error("Program not found");
+      throw new Error(`Program ${name} not found: ${error.message}`);
     }
     const res = await repoFromUrl(url).$query(
       `{
@@ -62,10 +66,9 @@ export const ProgramCollection = {
     return { ...res, name, url, sha };
   },
   items: async ({ self, args, info }) => {
-    const programs = await nodes.github.users
-      .one({ name: "membrane-io" })
-      .repos.one({ name: "directory" })
-      .content.dir.$query(`{ name sha html_url size download_url }`);
+    const programs = await directory.content.dir.$query(
+      `{ name sha html_url size download_url }`
+    );
 
     const isSubmodule = (item: any) => !item.download_url && item.size === 0;
 
@@ -143,14 +146,28 @@ export async function endpoint({
   args: { path, query, headers, method, body },
 }) {
   switch (path) {
+    case "/refresh": {
+      state.programs = null;
+      return JSON.stringify({
+        status: 302,
+        headers: { Location: "/" },
+      });
+    }
     case "/": {
-      let { cache } = parseQS(query);
       let programs = state.programs;
       let currentTime = new Date().getTime();
-      if (!programs || cache === "false") {
+      if (!programs) {
         programs = await root.programs.items.$query(
           `{ name, pullRequests { number } }`
         );
+        for (const program of programs) {
+          if (!state.programUrls[program.name]) {
+            state.programUrls[program.name] = repoUrlFromUrl(
+              await directory.content.file({ path: program.name }).html_url
+            );
+          }
+          program.url = state.programUrls[program.name];
+        }
         state.programs = programs;
         state.lastRefreshTime = currentTime;
       }
@@ -190,6 +207,11 @@ export async function endpoint({
     default:
       console.log("Unknown Endpoint:", path);
   }
+}
+
+function repoUrlFromUrl(url: string): string {
+  const [, user, repo] = url.match("https://github.com/([^/]+)/([^/]+)")!;
+  return `https://github.com/${user}/${repo}`;
 }
 
 function repoFromUrl(url: string): github.Repository {

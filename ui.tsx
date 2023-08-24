@@ -25,17 +25,19 @@ type ProgramDetailProps = {
 
 function RefreshButton({ refreshedAt }) {
   return (
-    <div style={{ paddingTop: "10px" }}>
-      <a className="link button" href="/?cache=false">
-        <span>&#10226;&#32;</span>Refresh
-      </a>
-      &#32; &#32;
+    <form action="/refresh" method="POST" style={{ paddingTop: "10px" }}>
+      <input type="submit" value="&#10226;&#32;Refresh" />
       <span
-        style={{ fontSize: "10px", letterSpacing: ".05ch;", opacity: ".5" }}
+        style={{
+          marginLeft: "10px",
+          fontSize: "10px",
+          letterSpacing: ".05ch;",
+          opacity: ".5",
+        }}
       >
         {refreshedAt}
       </span>
-    </div>
+    </form>
   );
 }
 
@@ -93,7 +95,11 @@ export function ProgramTable({ programs }: { programs: Program[] }) {
                   {program.name}
                 </a>
               </td>
-              <td>{program.pullRequests.length}</td>
+              <td>
+                {program.pullRequests.map((pr) => (
+                  <a href={`${program.url}/pull/${pr.number}`}>#{pr.number}</a>
+                ))}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -121,7 +127,7 @@ export function Programs({ programs, refreshedAt }: ProgramTableProps) {
           }}
         >
           <section>
-            <h2>Program's directory</h2>
+            <h2>Program directory</h2>
             <ProgramTable programs={programs} />
             <RefreshButton refreshedAt={refreshedAt} />
           </section>

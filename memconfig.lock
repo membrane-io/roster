@@ -1,5 +1,9 @@
 {
   "types": {
+    "directory": {
+      "gref_hash": "a15ba8f4b17255a57b21182e20ff7b3c0e01c14a6b55a9eecb95f82304bf1d74",
+      "type": "github:Repository"
+    },
     "http": {
       "gref_hash": "5cfa57fe83d1201eb831cc168a5dbe9decaa6010603df244ca6855f2fe61440c",
       "type": "http:Root"
@@ -7,10 +11,6 @@
     "github": {
       "gref_hash": "e6e65bff3bc6bf18cb624db3dc3875132855784b407ad6877c3f2b19e56a428a",
       "type": "github:Root"
-    },
-    "directory": {
-      "gref_hash": "a15ba8f4b17255a57b21182e20ff7b3c0e01c14a6b55a9eecb95f82304bf1d74",
-      "type": "github:Repository"
     }
   },
   "imports": [
@@ -29,10 +29,52 @@
                 "params": [
                   {
                     "name": "token",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   }
                 ],
                 "hints": {}
+              },
+              {
+                "name": "endpoint",
+                "description": "",
+                "type": "String",
+                "params": [
+                  {
+                    "name": "method",
+                    "description": "",
+                    "type": "String",
+                    "optional": false
+                  },
+                  {
+                    "name": "body",
+                    "description": "",
+                    "type": "String",
+                    "optional": true
+                  },
+                  {
+                    "name": "path",
+                    "description": "",
+                    "type": "String",
+                    "optional": false
+                  },
+                  {
+                    "name": "query",
+                    "description": "",
+                    "type": "String",
+                    "optional": true
+                  },
+                  {
+                    "name": "headers",
+                    "description": "",
+                    "type": "String",
+                    "optional": false
+                  }
+                ],
+                "hints": {
+                  "hidden": true
+                }
               }
             ],
             "fields": [
@@ -61,16 +103,34 @@
                 "params": [
                   {
                     "name": "name",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   },
                   {
                     "name": "value",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   }
                 ],
                 "hints": {
                   "hidden": false
                 }
+              },
+              {
+                "name": "search",
+                "description": "",
+                "type": "GlobalSearch",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "tests",
+                "description": "",
+                "type": "Tests",
+                "params": [],
+                "hints": {}
               },
               {
                 "name": "gref",
@@ -95,7 +155,9 @@
                 "params": [
                   {
                     "name": "name",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   }
                 ],
                 "hints": {}
@@ -107,7 +169,9 @@
                 "params": [
                   {
                     "name": "since",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   }
                 ],
                 "hints": {}
@@ -327,7 +391,9 @@
                 "params": [
                   {
                     "name": "name",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   }
                 ],
                 "hints": {}
@@ -339,23 +405,33 @@
                 "params": [
                   {
                     "name": "type",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   },
                   {
                     "name": "sort",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   },
                   {
                     "name": "direction",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   },
                   {
                     "name": "page",
-                    "type": "Int"
+                    "description": "",
+                    "type": "Int",
+                    "optional": false
                   },
                   {
                     "name": "pageSize",
-                    "type": "Int"
+                    "description": "",
+                    "type": "Int",
+                    "optional": false
                   }
                 ],
                 "hints": {}
@@ -367,23 +443,33 @@
                 "params": [
                   {
                     "name": "q",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "sort",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "order",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "page",
-                    "type": "Int"
+                    "description": "",
+                    "type": "Int",
+                    "optional": true
                   },
                   {
                     "name": "pageSize",
-                    "type": "Int"
+                    "description": "",
+                    "type": "Int",
+                    "optional": true
                   }
                 ],
                 "hints": {}
@@ -442,11 +528,15 @@
                 "params": [
                   {
                     "name": "new_owner",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   },
                   {
                     "name": "new_name",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   }
                 ],
                 "hints": {}
@@ -458,11 +548,41 @@
                 "params": [
                   {
                     "name": "username",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   },
                   {
                     "name": "permission",
-                    "type": "String"
+                    "description": "The permission to grant the collaborator. One of: pull, triage, push, maintain, admin. Default: push",
+                    "type": "String",
+                    "optional": false
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "createTree",
+                "description": "",
+                "type": "String",
+                "params": [
+                  {
+                    "name": "base",
+                    "description": "",
+                    "type": "String",
+                    "optional": false
+                  },
+                  {
+                    "name": "path",
+                    "description": "",
+                    "type": "String",
+                    "optional": false
+                  },
+                  {
+                    "name": "tree",
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   }
                 ],
                 "hints": {}
@@ -736,26 +856,30 @@
             ],
             "events": [
               {
+                "name": "commentCreated",
+                "description": "",
+                "type": "CommentEvent",
+                "params": [],
+                "hints": {}
+              },
+              {
                 "name": "issueOpened",
                 "description": "",
-                "type": "Ref",
-                "ofType": "Issue",
+                "type": "IssueEvent",
                 "params": [],
                 "hints": {}
               },
               {
                 "name": "pullRequestOpened",
                 "description": "",
-                "type": "Ref",
-                "ofType": "PullRequest",
+                "type": "PullRequestEvent",
                 "params": [],
                 "hints": {}
               },
               {
                 "name": "releasePublished",
                 "description": "",
-                "type": "Ref",
-                "ofType": "Release",
+                "type": "ReleaseEvent",
                 "params": [],
                 "hints": {}
               }
@@ -773,7 +897,9 @@
                 "params": [
                   {
                     "name": "name",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   }
                 ],
                 "hints": {}
@@ -785,11 +911,15 @@
                 "params": [
                   {
                     "name": "page",
-                    "type": "Int"
+                    "description": "",
+                    "type": "Int",
+                    "optional": true
                   },
                   {
                     "name": "pageSize",
-                    "type": "Int"
+                    "description": "",
+                    "type": "Int",
+                    "optional": true
                   }
                 ],
                 "hints": {}
@@ -840,7 +970,28 @@
           {
             "name": "Branch",
             "description": "",
-            "actions": [],
+            "actions": [
+              {
+                "name": "update",
+                "description": "",
+                "type": "Void",
+                "params": [
+                  {
+                    "name": "sha",
+                    "description": "",
+                    "type": "String",
+                    "optional": false
+                  },
+                  {
+                    "name": "ref",
+                    "description": "",
+                    "type": "String",
+                    "optional": false
+                  }
+                ],
+                "hints": {}
+              }
+            ],
             "fields": [
               {
                 "name": "name",
@@ -877,7 +1028,34 @@
           {
             "name": "CommitCollection",
             "description": "",
-            "actions": [],
+            "actions": [
+              {
+                "name": "create",
+                "description": "",
+                "type": "String",
+                "params": [
+                  {
+                    "name": "message",
+                    "description": "",
+                    "type": "String",
+                    "optional": false
+                  },
+                  {
+                    "name": "tree",
+                    "description": "",
+                    "type": "String",
+                    "optional": false
+                  },
+                  {
+                    "name": "parents",
+                    "description": "",
+                    "type": "String",
+                    "optional": false
+                  }
+                ],
+                "hints": {}
+              }
+            ],
             "fields": [
               {
                 "name": "one",
@@ -886,7 +1064,9 @@
                 "params": [
                   {
                     "name": "ref",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   }
                 ],
                 "hints": {}
@@ -898,11 +1078,15 @@
                 "params": [
                   {
                     "name": "page",
-                    "type": "Int"
+                    "description": "",
+                    "type": "Int",
+                    "optional": true
                   },
                   {
                     "name": "pageSize",
-                    "type": "Int"
+                    "description": "",
+                    "type": "Int",
+                    "optional": true
                   }
                 ],
                 "hints": {}
@@ -967,7 +1151,9 @@
                 "description": "",
                 "type": "String",
                 "params": [],
-                "hints": {}
+                "hints": {
+                  "primary": true
+                }
               },
               {
                 "name": "author",
@@ -977,10 +1163,145 @@
                 "hints": {}
               },
               {
+                "name": "html_url",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "date",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
                 "name": "gref",
                 "description": "A reference to this node",
                 "type": "Ref",
                 "ofType": "Commit",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "CommentCollection",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "one",
+                "description": "",
+                "type": "Comment",
+                "params": [
+                  {
+                    "name": "id",
+                    "description": "",
+                    "type": "Int",
+                    "optional": false
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "page",
+                "description": "",
+                "type": "CommentPage",
+                "params": [
+                  {
+                    "name": "page",
+                    "description": "",
+                    "type": "Int",
+                    "optional": true
+                  },
+                  {
+                    "name": "pageSize",
+                    "description": "",
+                    "type": "Int",
+                    "optional": true
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "CommentCollection",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "CommentPage",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "items",
+                "description": "",
+                "type": "List",
+                "ofType": "Comment",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "next",
+                "description": "",
+                "type": "Ref",
+                "ofType": "CommentPage",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "CommentPage",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "Comment",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "body",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {
+                  "primary": true
+                }
+              },
+              {
+                "name": "created_at",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "updated_at",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "Comment",
                 "params": [],
                 "hints": {}
               }
@@ -999,7 +1320,9 @@
                 "params": [
                   {
                     "name": "path",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   }
                 ],
                 "hints": {}
@@ -1012,7 +1335,9 @@
                 "params": [
                   {
                     "name": "path",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   }
                 ],
                 "hints": {}
@@ -1130,7 +1455,9 @@
                 "params": [
                   {
                     "name": "number",
-                    "type": "Int"
+                    "description": "",
+                    "type": "Int",
+                    "optional": false
                   }
                 ],
                 "hints": {}
@@ -1142,23 +1469,33 @@
                 "params": [
                   {
                     "name": "page",
-                    "type": "Int"
+                    "description": "",
+                    "type": "Int",
+                    "optional": false
                   },
                   {
                     "name": "pageSize",
-                    "type": "Int"
+                    "description": "",
+                    "type": "Int",
+                    "optional": false
                   },
                   {
                     "name": "q",
-                    "type": "String"
+                    "description": "Github API returns pull requests in the issues endpoint. Use this to include/exclude them. Can be either issue or pr",
+                    "type": "String",
+                    "optional": false
                   },
                   {
                     "name": "sort",
-                    "type": "String"
+                    "description": "What to sort results by. Can be created, updated, comments.",
+                    "type": "String",
+                    "optional": false
                   },
                   {
                     "name": "order",
-                    "type": "String"
+                    "description": "One of asc (ascending) or desc (descending).",
+                    "type": "String",
+                    "optional": false
                   }
                 ],
                 "hints": {}
@@ -1170,51 +1507,75 @@
                 "params": [
                   {
                     "name": "page",
-                    "type": "Int"
+                    "description": "",
+                    "type": "Int",
+                    "optional": true
                   },
                   {
                     "name": "pageSize",
-                    "type": "Int"
+                    "description": "",
+                    "type": "Int",
+                    "optional": true
                   },
                   {
                     "name": "kind",
-                    "type": "String"
+                    "description": "Github API returns pull requests in the issues endpoint. Use this to include/exclude them. Can be either issue or pr",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "milestone",
-                    "type": "String"
+                    "description": "If an integer is passed, it should refer to a milestone by its number field. If the string * is passed, issues with any milestone are accepted. If the string none is passed, issues without milestones are returned.",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "state",
-                    "type": "String"
+                    "description": "Indicates the state of the issues to return. Can be open, closed, or all.",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "assignee",
-                    "type": "String"
+                    "description": "Can be the name of a user. Pass in none for issues with no assigned user, and * for issues assigned to any user.",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "creator",
-                    "type": "String"
+                    "description": "The user that created the issue.",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "mentioned",
-                    "type": "String"
+                    "description": "A user that's mentioned in the issue.",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "labels",
-                    "type": "String"
+                    "description": "A list of comma separated label names. Example: bug,ui,@high",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "sort",
-                    "type": "String"
+                    "description": "What to sort results by. Can be created, updated, comments.",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "direction",
-                    "type": "String"
+                    "description": "One of asc (ascending) or desc (descending).",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "since",
-                    "type": "String"
+                    "description": "Only show notifications updated after the given time. This is a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ",
+                    "type": "String",
+                    "optional": true
                   }
                 ],
                 "hints": {}
@@ -1313,13 +1674,6 @@
             "description": "",
             "actions": [
               {
-                "name": "subscribe",
-                "description": "",
-                "type": "Void",
-                "params": [],
-                "hints": {}
-              },
-              {
                 "name": "close",
                 "description": "",
                 "type": "Void",
@@ -1333,7 +1687,9 @@
                 "params": [
                   {
                     "name": "body",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   }
                 ],
                 "hints": {}
@@ -1393,7 +1749,7 @@
               {
                 "name": "comments",
                 "description": "",
-                "type": "Int",
+                "type": "CommentCollection",
                 "params": [],
                 "hints": {}
               },
@@ -1508,6 +1864,13 @@
                 "hints": {}
               },
               {
+                "name": "html_url",
+                "description": "",
+                "type": "String",
+                "params": [],
+                "hints": {}
+              },
+              {
                 "name": "gref",
                 "description": "A reference to this node",
                 "type": "Ref",
@@ -1517,6 +1880,13 @@
               }
             ],
             "events": [
+              {
+                "name": "commentCreated",
+                "description": "",
+                "type": "CommentEvent",
+                "params": [],
+                "hints": {}
+              },
               {
                 "name": "closed",
                 "description": "",
@@ -1670,21 +2040,7 @@
             "description": "",
             "actions": [
               {
-                "name": "subscribe",
-                "description": "",
-                "type": "Void",
-                "params": [],
-                "hints": {}
-              },
-              {
                 "name": "close",
-                "description": "",
-                "type": "Void",
-                "params": [],
-                "hints": {}
-              },
-              {
-                "name": "merge",
                 "description": "",
                 "type": "Void",
                 "params": [],
@@ -1697,7 +2053,9 @@
                 "params": [
                   {
                     "name": "body",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   }
                 ],
                 "hints": {}
@@ -1787,6 +2145,13 @@
                 "hints": {}
               },
               {
+                "name": "comments",
+                "description": "",
+                "type": "CommentCollection",
+                "params": [],
+                "hints": {}
+              },
+              {
                 "name": "gref",
                 "description": "A reference to this node",
                 "type": "Ref",
@@ -1817,7 +2182,9 @@
                 "params": [
                   {
                     "name": "number",
-                    "type": "Int"
+                    "description": "",
+                    "type": "Int",
+                    "optional": false
                   }
                 ],
                 "hints": {}
@@ -1829,31 +2196,45 @@
                 "params": [
                   {
                     "name": "state",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "head",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "base",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "sort",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "direction",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "page",
-                    "type": "Int"
+                    "description": "",
+                    "type": "Int",
+                    "optional": true
                   },
                   {
                     "name": "pageSize",
-                    "type": "Int"
+                    "description": "",
+                    "type": "Int",
+                    "optional": true
                   }
                 ],
                 "hints": {}
@@ -1913,7 +2294,9 @@
                 "params": [
                   {
                     "name": "id",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   }
                 ],
                 "hints": {}
@@ -1925,11 +2308,15 @@
                 "params": [
                   {
                     "name": "pageSize",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "page",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   }
                 ],
                 "hints": {}
@@ -2206,6 +2593,272 @@
               }
             ],
             "events": []
+          },
+          {
+            "name": "GlobalSearch",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "commits",
+                "description": "",
+                "type": "CommitPage",
+                "params": [
+                  {
+                    "name": "type",
+                    "description": "",
+                    "type": "String",
+                    "optional": true
+                  },
+                  {
+                    "name": "sort",
+                    "description": "",
+                    "type": "String",
+                    "optional": true
+                  },
+                  {
+                    "name": "direction",
+                    "description": "",
+                    "type": "String",
+                    "optional": true
+                  },
+                  {
+                    "name": "page",
+                    "description": "",
+                    "type": "Int",
+                    "optional": true
+                  },
+                  {
+                    "name": "pageSize",
+                    "description": "",
+                    "type": "Int",
+                    "optional": true
+                  },
+                  {
+                    "name": "q",
+                    "description": "",
+                    "type": "String",
+                    "optional": true
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "issues",
+                "description": "",
+                "type": "IssuePage",
+                "params": [
+                  {
+                    "name": "type",
+                    "description": "",
+                    "type": "String",
+                    "optional": true
+                  },
+                  {
+                    "name": "sort",
+                    "description": "",
+                    "type": "String",
+                    "optional": true
+                  },
+                  {
+                    "name": "direction",
+                    "description": "",
+                    "type": "String",
+                    "optional": true
+                  },
+                  {
+                    "name": "page",
+                    "description": "",
+                    "type": "Int",
+                    "optional": true
+                  },
+                  {
+                    "name": "pageSize",
+                    "description": "",
+                    "type": "Int",
+                    "optional": true
+                  },
+                  {
+                    "name": "q",
+                    "description": "",
+                    "type": "String",
+                    "optional": true
+                  }
+                ],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "GlobalSearch",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "IssueEvent",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "issue",
+                "description": "",
+                "type": "Ref",
+                "ofType": "Issue",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "IssueEvent",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "PullRequestEvent",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "pullRequest",
+                "description": "",
+                "type": "Ref",
+                "ofType": "PullRequest",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "PullRequestEvent",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "ReleaseEvent",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "release",
+                "description": "",
+                "type": "Ref",
+                "ofType": "Release",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "ReleaseEvent",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "CommentEvent",
+            "description": "",
+            "actions": [],
+            "fields": [
+              {
+                "name": "comment",
+                "description": "",
+                "type": "Ref",
+                "ofType": "Comment",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "CommentEvent",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
+          },
+          {
+            "name": "Tests",
+            "description": "",
+            "actions": [
+              {
+                "name": "testUser",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "testRepo",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "testIssue",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "testCommit",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "testIssueComment",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "testPullRequest",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              },
+              {
+                "name": "testSearch",
+                "description": "",
+                "type": "Boolean",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "fields": [
+              {
+                "name": "gref",
+                "description": "A reference to this node",
+                "type": "Ref",
+                "ofType": "Tests",
+                "params": [],
+                "hints": {}
+              }
+            ],
+            "events": []
           }
         ],
         "imports": [
@@ -2224,15 +2877,21 @@
                       "params": [
                         {
                           "name": "url",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "headers",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": true
                         },
                         {
                           "name": "body",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": true
                         }
                       ],
                       "hints": {}
@@ -2244,15 +2903,21 @@
                       "params": [
                         {
                           "name": "url",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "headers",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": true
                         },
                         {
                           "name": "body",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": true
                         }
                       ],
                       "hints": {}
@@ -2264,15 +2929,21 @@
                       "params": [
                         {
                           "name": "url",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "headers",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": true
                         },
                         {
                           "name": "body",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": true
                         }
                       ],
                       "hints": {}
@@ -2284,18 +2955,64 @@
                       "params": [
                         {
                           "name": "url",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "headers",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": true
                         },
                         {
                           "name": "body",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": true
                         }
                       ],
                       "hints": {}
+                    },
+                    {
+                      "name": "endpoint",
+                      "description": "The endpoint action",
+                      "type": "String",
+                      "params": [
+                        {
+                          "name": "method",
+                          "description": "HTTP method",
+                          "type": "String",
+                          "optional": false
+                        },
+                        {
+                          "name": "path",
+                          "description": "HTTP path",
+                          "type": "String",
+                          "optional": false
+                        },
+                        {
+                          "name": "query",
+                          "description": "HTTP query string, encoded as JSON",
+                          "type": "String",
+                          "optional": true
+                        },
+                        {
+                          "name": "headers",
+                          "description": "HTTP headers, encoded as JSON",
+                          "type": "String",
+                          "optional": false
+                        },
+                        {
+                          "name": "body",
+                          "description": "HTTP body, if any",
+                          "type": "String",
+                          "optional": true
+                        }
+                      ],
+                      "hints": {
+                        "hidden": true
+                      }
                     }
                   ],
                   "fields": [
@@ -2313,11 +3030,15 @@
                       "params": [
                         {
                           "name": "url",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "headers",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": true
                         }
                       ],
                       "hints": {}
@@ -2329,12 +3050,16 @@
                       "params": [
                         {
                           "name": "api",
-                          "type": "String"
+                          "description": "The API to use. Check https://www.membrane.io/docs for a list of APIs that support this",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "authId",
+                          "description": "An arbitrary gref that uniquely identifies this program.",
                           "type": "Ref",
-                          "ofType": "String"
+                          "ofType": "String",
+                          "optional": false
                         }
                       ],
                       "hints": {}
@@ -2405,15 +3130,21 @@
                       "params": [
                         {
                           "name": "url",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "headers",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": true
                         },
                         {
                           "name": "body",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": true
                         }
                       ],
                       "hints": {}
@@ -2425,15 +3156,21 @@
                       "params": [
                         {
                           "name": "url",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "headers",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": true
                         },
                         {
                           "name": "body",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": true
                         }
                       ],
                       "hints": {}
@@ -2445,15 +3182,21 @@
                       "params": [
                         {
                           "name": "url",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "headers",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": true
                         },
                         {
                           "name": "body",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": true
                         }
                       ],
                       "hints": {}
@@ -2465,15 +3208,21 @@
                       "params": [
                         {
                           "name": "url",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "headers",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": true
                         },
                         {
                           "name": "body",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": true
                         }
                       ],
                       "hints": {}
@@ -2487,11 +3236,15 @@
                       "params": [
                         {
                           "name": "url",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "headers",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         }
                       ],
                       "hints": {}
@@ -2531,15 +3284,21 @@
                             "params": [
                               {
                                 "name": "url",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "headers",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "body",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               }
                             ],
                             "hints": {}
@@ -2551,15 +3310,21 @@
                             "params": [
                               {
                                 "name": "url",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "headers",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "body",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               }
                             ],
                             "hints": {}
@@ -2571,15 +3336,21 @@
                             "params": [
                               {
                                 "name": "url",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "headers",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "body",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               }
                             ],
                             "hints": {}
@@ -2591,15 +3362,21 @@
                             "params": [
                               {
                                 "name": "url",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "headers",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "body",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               }
                             ],
                             "hints": {}
@@ -2613,11 +3390,15 @@
                             "params": [
                               {
                                 "name": "url",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "headers",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               }
                             ],
                             "hints": {}
@@ -2629,12 +3410,16 @@
                             "params": [
                               {
                                 "name": "api",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "authId",
+                                "description": "",
                                 "type": "Ref",
-                                "ofType": "String"
+                                "ofType": "String",
+                                "optional": false
                               }
                             ],
                             "hints": {}
@@ -2689,15 +3474,21 @@
                             "params": [
                               {
                                 "name": "url",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "headers",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "body",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               }
                             ],
                             "hints": {}
@@ -2709,15 +3500,21 @@
                             "params": [
                               {
                                 "name": "url",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "headers",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "body",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               }
                             ],
                             "hints": {}
@@ -2729,15 +3526,21 @@
                             "params": [
                               {
                                 "name": "url",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "headers",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "body",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               }
                             ],
                             "hints": {}
@@ -2749,15 +3552,21 @@
                             "params": [
                               {
                                 "name": "url",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "headers",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "body",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               }
                             ],
                             "hints": {}
@@ -2771,11 +3580,15 @@
                             "params": [
                               {
                                 "name": "url",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "headers",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               }
                             ],
                             "hints": {}
@@ -2812,11 +3625,15 @@
                             "params": [
                               {
                                 "name": "key",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "seconds",
-                                "type": "Float"
+                                "description": "",
+                                "type": "Float",
+                                "optional": false
                               }
                             ],
                             "hints": {}
@@ -2831,15 +3648,21 @@
                             "params": [
                               {
                                 "name": "key",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "spec",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "maxCount",
-                                "type": "Int"
+                                "description": "",
+                                "type": "Int",
+                                "optional": false
                               }
                             ],
                             "hints": {}
@@ -2851,11 +3674,15 @@
                             "params": [
                               {
                                 "name": "key",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               },
                               {
                                 "name": "seconds",
-                                "type": "String"
+                                "description": "",
+                                "type": "String",
+                                "optional": false
                               }
                             ],
                             "hints": {}
@@ -2917,6 +3744,32 @@
             }
           },
           {
+            "name": "sys-process",
+            "schema": {
+              "types": [
+                {
+                  "name": "Root",
+                  "description": "",
+                  "actions": [],
+                  "fields": [
+                    {
+                      "name": "endpointUrl",
+                      "description": "Gets the program's own endpoint URL",
+                      "type": "String",
+                      "params": [],
+                      "hints": {}
+                    }
+                  ],
+                  "events": []
+                }
+              ],
+              "imports": []
+            },
+            "source": {
+              "Program": "tbd"
+            }
+          },
+          {
             "name": "sys-clock",
             "schema": {
               "types": [
@@ -2931,11 +3784,15 @@
                       "params": [
                         {
                           "name": "key",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "seconds",
-                          "type": "Float"
+                          "description": "",
+                          "type": "Float",
+                          "optional": false
                         }
                       ],
                       "hints": {}
@@ -2950,15 +3807,21 @@
                       "params": [
                         {
                           "name": "key",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "spec",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "maxCount",
-                          "type": "Int"
+                          "description": "",
+                          "type": "Int",
+                          "optional": false
                         }
                       ],
                       "hints": {}
@@ -2970,11 +3833,15 @@
                       "params": [
                         {
                           "name": "key",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "seconds",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         }
                       ],
                       "hints": {}
@@ -3050,15 +3917,21 @@
                 "params": [
                   {
                     "name": "url",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   },
                   {
                     "name": "headers",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "body",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   }
                 ],
                 "hints": {}
@@ -3070,15 +3943,21 @@
                 "params": [
                   {
                     "name": "url",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   },
                   {
                     "name": "headers",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "body",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   }
                 ],
                 "hints": {}
@@ -3090,15 +3969,21 @@
                 "params": [
                   {
                     "name": "url",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   },
                   {
                     "name": "headers",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "body",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   }
                 ],
                 "hints": {}
@@ -3110,18 +3995,64 @@
                 "params": [
                   {
                     "name": "url",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   },
                   {
                     "name": "headers",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "body",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   }
                 ],
                 "hints": {}
+              },
+              {
+                "name": "endpoint",
+                "description": "The endpoint action",
+                "type": "String",
+                "params": [
+                  {
+                    "name": "method",
+                    "description": "HTTP method",
+                    "type": "String",
+                    "optional": false
+                  },
+                  {
+                    "name": "path",
+                    "description": "HTTP path",
+                    "type": "String",
+                    "optional": false
+                  },
+                  {
+                    "name": "query",
+                    "description": "HTTP query string, encoded as JSON",
+                    "type": "String",
+                    "optional": true
+                  },
+                  {
+                    "name": "headers",
+                    "description": "HTTP headers, encoded as JSON",
+                    "type": "String",
+                    "optional": false
+                  },
+                  {
+                    "name": "body",
+                    "description": "HTTP body, if any",
+                    "type": "String",
+                    "optional": true
+                  }
+                ],
+                "hints": {
+                  "hidden": true
+                }
               }
             ],
             "fields": [
@@ -3139,11 +4070,15 @@
                 "params": [
                   {
                     "name": "url",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   },
                   {
                     "name": "headers",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   }
                 ],
                 "hints": {}
@@ -3155,12 +4090,16 @@
                 "params": [
                   {
                     "name": "api",
-                    "type": "String"
+                    "description": "The API to use. Check https://www.membrane.io/docs for a list of APIs that support this",
+                    "type": "String",
+                    "optional": false
                   },
                   {
                     "name": "authId",
+                    "description": "An arbitrary gref that uniquely identifies this program.",
                     "type": "Ref",
-                    "ofType": "String"
+                    "ofType": "String",
+                    "optional": false
                   }
                 ],
                 "hints": {}
@@ -3231,15 +4170,21 @@
                 "params": [
                   {
                     "name": "url",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   },
                   {
                     "name": "headers",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "body",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   }
                 ],
                 "hints": {}
@@ -3251,15 +4196,21 @@
                 "params": [
                   {
                     "name": "url",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   },
                   {
                     "name": "headers",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "body",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   }
                 ],
                 "hints": {}
@@ -3271,15 +4222,21 @@
                 "params": [
                   {
                     "name": "url",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   },
                   {
                     "name": "headers",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "body",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   }
                 ],
                 "hints": {}
@@ -3291,15 +4248,21 @@
                 "params": [
                   {
                     "name": "url",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   },
                   {
                     "name": "headers",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   },
                   {
                     "name": "body",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": true
                   }
                 ],
                 "hints": {}
@@ -3313,11 +4276,15 @@
                 "params": [
                   {
                     "name": "url",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   },
                   {
                     "name": "headers",
-                    "type": "String"
+                    "description": "",
+                    "type": "String",
+                    "optional": false
                   }
                 ],
                 "hints": {}
@@ -3357,15 +4324,21 @@
                       "params": [
                         {
                           "name": "url",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "headers",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "body",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         }
                       ],
                       "hints": {}
@@ -3377,15 +4350,21 @@
                       "params": [
                         {
                           "name": "url",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "headers",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "body",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         }
                       ],
                       "hints": {}
@@ -3397,15 +4376,21 @@
                       "params": [
                         {
                           "name": "url",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "headers",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "body",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         }
                       ],
                       "hints": {}
@@ -3417,15 +4402,21 @@
                       "params": [
                         {
                           "name": "url",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "headers",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "body",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         }
                       ],
                       "hints": {}
@@ -3439,11 +4430,15 @@
                       "params": [
                         {
                           "name": "url",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "headers",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         }
                       ],
                       "hints": {}
@@ -3455,12 +4450,16 @@
                       "params": [
                         {
                           "name": "api",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "authId",
+                          "description": "",
                           "type": "Ref",
-                          "ofType": "String"
+                          "ofType": "String",
+                          "optional": false
                         }
                       ],
                       "hints": {}
@@ -3515,15 +4514,21 @@
                       "params": [
                         {
                           "name": "url",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "headers",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "body",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         }
                       ],
                       "hints": {}
@@ -3535,15 +4540,21 @@
                       "params": [
                         {
                           "name": "url",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "headers",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "body",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         }
                       ],
                       "hints": {}
@@ -3555,15 +4566,21 @@
                       "params": [
                         {
                           "name": "url",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "headers",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "body",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         }
                       ],
                       "hints": {}
@@ -3575,15 +4592,21 @@
                       "params": [
                         {
                           "name": "url",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "headers",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "body",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         }
                       ],
                       "hints": {}
@@ -3597,11 +4620,15 @@
                       "params": [
                         {
                           "name": "url",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "headers",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         }
                       ],
                       "hints": {}
@@ -3638,11 +4665,15 @@
                       "params": [
                         {
                           "name": "key",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "seconds",
-                          "type": "Float"
+                          "description": "",
+                          "type": "Float",
+                          "optional": false
                         }
                       ],
                       "hints": {}
@@ -3657,15 +4688,21 @@
                       "params": [
                         {
                           "name": "key",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "spec",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "maxCount",
-                          "type": "Int"
+                          "description": "",
+                          "type": "Int",
+                          "optional": false
                         }
                       ],
                       "hints": {}
@@ -3677,11 +4714,15 @@
                       "params": [
                         {
                           "name": "key",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         },
                         {
                           "name": "seconds",
-                          "type": "String"
+                          "description": "",
+                          "type": "String",
+                          "optional": false
                         }
                       ],
                       "hints": {}
