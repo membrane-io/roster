@@ -18,7 +18,7 @@ export const Root = {
 };
 
 export const ProgramCollection = {
-  one: async ({ args: { name } }) => {
+  one: async ({ name }) => {
     if (!name) {
       throw new Error("Program name is required");
     }
@@ -65,7 +65,7 @@ export const ProgramCollection = {
     );
     return { ...res, name, url, sha };
   },
-  items: async ({ self, args, info }) => {
+  items: async (args, { self, info }) => {
     const programs = await directory.content.dir.$query(
       `{ name sha html_url size download_url }`
     );
@@ -79,21 +79,21 @@ export const ProgramCollection = {
 };
 
 export const Program = {
-  gref: async ({ obj }) => {
+  gref: async (_, { obj }) => {
     return root.programs.one({ name: obj.name });
   },
-  stars: async ({ obj }) => {
+  stars: async (_, { obj }) => {
     return obj.stargazers_count;
   },
-  expressions: async ({ obj }) => {
+  expressions: async (_, { obj }) => {
     const { expressions } = JSON.parse(obj.content?.file?.content as string);
     return (expressions && Object.keys(expressions).length) || 0;
   },
-  types: async ({ obj }) => {
+  types: async (_, { obj }) => {
     const { schema } = JSON.parse(obj.content?.file?.content as string);
     return schema.types.length || 0;
   },
-  pullRequests: async ({ self, obj }) => {
+  pullRequests: async (_, { self, obj }) => {
     let items = obj.pull_requests?.page?.items;
     if (items === undefined && obj.html_url) {
       const repo = repoFromUrl(obj.html_url);
@@ -103,13 +103,13 @@ export const Program = {
     }
     return items;
   },
-  lastCommit: async ({ obj }) => {
+  lastCommit: async (_, { obj }) => {
     return obj.commits?.page.items[0].sha;
   },
-  isOutdated: async ({ obj }) => {
+  isOutdated: async (_, { obj }) => {
     return obj.commits?.page.items[0].sha !== obj.sha;
   },
-  update: async ({ obj }) => {
+  update: async (_, { obj }) => {
     const { name, url } = obj;
     const [, user, repo] = url.match("https://github.com/([^/]+)/([^/]+)");
     // get the parent repo sha
@@ -142,9 +142,7 @@ export const Program = {
   },
 };
 
-export async function endpoint({
-  args: { path, query, headers, method, body },
-}) {
+export async function endpoint({ path, query, headers, method, body }) {
   switch (path) {
     case "/refresh": {
       state.programs = null;
