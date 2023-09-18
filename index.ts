@@ -51,7 +51,7 @@ export const ProgramCollection = {
           }
           content {
             file(path: "memconfig.json") {
-              content
+              contentText
             }
           }
           commits {
@@ -65,7 +65,7 @@ export const ProgramCollection = {
     );
     return { ...res, name, url, sha };
   },
-  items: async (args, { self, info }) => {
+  items: async ({ self, info }) => {
     const programs = await directory.content.dir.$query(
       `{ name sha html_url size download_url }`
     );
@@ -86,11 +86,11 @@ export const Program = {
     return obj.stargazers_count;
   },
   expressions: async (_, { obj }) => {
-    const { expressions } = JSON.parse(obj.content?.file?.content as string);
+    const { expressions } = JSON.parse(obj.content.file.contentText as string);
     return (expressions && Object.keys(expressions).length) || 0;
   },
   types: async (_, { obj }) => {
-    const { schema } = JSON.parse(obj.content?.file?.content as string);
+    const { schema } = JSON.parse(obj.content?.file?.contentText as string);
     return schema.types.length || 0;
   },
   pullRequests: async (_, { self, obj }) => {
