@@ -63,7 +63,7 @@ export function RepinMessage({ name }) {
             <a
               className="link button"
               style={{ padding: "2px 4px" }}
-              href={`/program?name=${name}`}
+              href={`/`}
             >
               <span>&#8592;&#32;</span>Back
             </a>
@@ -85,12 +85,23 @@ export function ProgramTable({ programs }: { programs: Program[] }) {
           <tr style={{ textAlign: "left" }}>
             <th>Program</th>
             <th>Pull Requests</th>
+            <th> </th>
           </tr>
         </thead>
         <tbody>
           {programs.map((program) => (
             <tr key={program.name}>
               <td>
+                <span
+                  style={{
+                    display: "inline-block",
+                    width: "5px",
+                    height: "5px",
+                    borderRadius: "50%",
+                    backgroundColor: program.isOutdated ? "#ff0000" : "#00ff00",
+                    marginRight: "5px",
+                  }}
+                ></span>
                 <a className="link" href={`/program?name=${program.name}`}>
                   {program.name}
                 </a>
@@ -99,6 +110,16 @@ export function ProgramTable({ programs }: { programs: Program[] }) {
                 {program.pullRequests.map((pr) => (
                   <a href={`${program.url}/pull/${pr.number}`}>#{pr.number}</a>
                 ))}
+              </td>
+              <td>
+                {program.isOutdated && (
+                  <a
+                    className="link button-small button"
+                    href={`/update-program?name=${program.name}`}
+                  >
+                    ⇡ Update
+                  </a>
+                )}
               </td>
             </tr>
           ))}
@@ -281,7 +302,6 @@ export function ProgramDetail({ program }: ProgramDetailProps) {
           </section>
           {program.pullRequests.map((item) => (
             <PullRequest
-              key={item.number}
               url={`${fixUrl(program.url)}/pull/`}
               pullRequest={item}
             />
@@ -296,7 +316,7 @@ function PullRequest({ url, pullRequest }) {
   const color = pullRequest.state === "open" ? "#00ff1033" : "#ff000033";
   const pullRequestHtml = marked.parse(pullRequest.body || "");
   return (
-    <section>
+    <section key={url}>
       <h2>Pull Request - {pullRequest.number}</h2>
       <div
         style={{

@@ -107,7 +107,17 @@ export const Program = {
     return obj.commits?.page.items[0].sha;
   },
   isOutdated: async (_, { obj }) => {
-    return obj.commits?.page.items[0].sha !== obj.sha;
+    let lastCommit = obj.commits?.page.items[0].sha;
+    let currentCommit = obj.sha;
+    if (!lastCommit || !currentCommit) {
+      lastCommit = obj.html_url.split("/").pop();
+      const repo = repoFromUrl(obj.html_url);
+      const commits = await repo.commits
+        .page({ page: 1, pageSize: 1 })
+        .items.$query(`{ sha }`);
+      currentCommit = commits[0].sha;
+    }
+    return lastCommit !== currentCommit;
   },
   update: async (_, { obj }) => {
     const { name, url } = obj;
@@ -139,6 +149,11 @@ export const Program = {
     await nodes.directory.branches
       .one({ name: "main" })
       .update({ sha: commit, ref: "heads/main" });
+
+    const program = state.programs.find((p) => p.name === name);
+    if (program) {
+      program.isOutdated = false;
+    }
   },
 };
 
@@ -156,7 +171,7 @@ export async function endpoint({ path, query, headers, method, body }) {
       let currentTime = new Date().getTime();
       if (!programs) {
         programs = await root.programs.items.$query(
-          `{ name, pullRequests { number } }`
+          `{ name, pullRequests { number }, isOutdated }`
         );
         for (const program of programs) {
           if (!state.programUrls[program.name]) {
@@ -242,8 +257,9 @@ function html(body: string) {
     .header{
       padding-bottom: 10px;
     }
+    .link { text-decoration: none; }
     .link:link { text-decoration: none; }
-    .link:visited { text-decoration: none; }
+    .link:visited { color: inherit; }
     .link:hover { text-decoration: underline; }
     .link:active { text-decoration: underline; }
     .container {
@@ -252,6 +268,13 @@ function html(body: string) {
       flex-direction: row;
       justify-content: center;
       align-items: center;
+    }
+    .button-small {
+      padding: 0px 4px !important;
+      font-size: 7pt !important;
+    }
+    .dots {
+      color: #ddd;
     }
     </style>
     </html>
